@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\Category\" />
+    <Folder Include="Dtos\CategoryAttribute\" />
+    <Folder Include="Dtos\Banner\" />
+    <Folder Include="Dtos\Inventory\" />
+    <Folder Include="Dtos\Product\Get\" />
+    <Folder Include="Dtos\Role\" />
+    <Folder Include="Dtos\Possition\" />
+    <Folder Include="Dtos\Slider\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+  </ItemGroup>
+
+</Project>

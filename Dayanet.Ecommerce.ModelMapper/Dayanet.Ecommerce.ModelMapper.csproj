@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="MappConfig\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dayanet.Ecommerce.Domain\Dayanet.Ecommerce.Domain.csproj" />
+    <ProjectReference Include="..\Dayanet.Ecommerce.SharedModels\Dayanet.Ecommerce.SharedModels.csproj" />
+  </ItemGroup>
+
+</Project>

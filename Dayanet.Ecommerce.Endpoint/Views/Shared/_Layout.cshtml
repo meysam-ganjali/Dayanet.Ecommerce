@@ -1,0 +1,376 @@
+﻿@using System.Security.Claims
+@using Dayanet.Ecommerce.Endpoint.Utility
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>فروشگاه مد EG - الگوی HTML تجارت الکترونیک چند منظوره</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="~/assets/images/favicon.png" type="image/png" sizes="20x20">
+    <link rel="stylesheet" href="~/assets/css/swiper.css">
+    <link rel="stylesheet" href="~/assets/font/flaticon.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/assets/css/global.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/responsive.css">
+</head>
+
+<body>
+    <div class="main-sidebar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-1 col-1">
+                    <div class="sidebar-wrap d-flex justify-content-between flex-column">
+                        <div class="sidebar-top d-flex flex-column align-items-center">
+                            <div class="category-icon">
+                                <i class="flaticon-menu"></i>
+                            </div>
+                        </div>
+                        <div class="sidebar-bottom">
+                            <ul class="sidebar-icons">
+                                <li><a href="dashboard.html"><i class="flaticon-user"></i></a></li>
+                                <li><a href="product.html"><i class="flaticon-heart"></i></a></li>
+                                <li class="cart-icon">
+                                    <a><i class="flaticon-shopping-cart"></i></a>
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mobil-sidebar">
+        <ul class="mobil-sidebar-icons">
+            <li class="category-icon"><a href="#"><i class="flaticon-menu"></i></a></li>
+            <li><a href="dashboard.html"><i class="flaticon-user"></i></a></li>
+            <li><a href="#"><i class="flaticon-heart"></i></a></li>
+            <li class="cart-icon">
+                <a><i class="flaticon-shopping-cart"></i></a>
+
+            </li>
+        </ul>
+    </div>
+    @*@if (SignInManager.IsSignedIn(User)) {
+    await Component.InvokeAsync("Cart");
+    }*@
+
+    <div class="category-wrapper">
+        <div class="category-bar">
+            <h5 class="cb-title text-uppercase category-icon">
+                همه دسته
+                <i class="flaticon-arrow-pointing-to-right"></i>
+            </h5>
+            <ul class="cb-category-list">
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-man"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title">مردانه <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-woman"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title">زنانه<i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-children"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> بچه گانه <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-sun-glasses"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> لوازم جانبی <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-formal"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> لباس خواب <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-shoes"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> مجموعه کفش <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-watch"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> ساعت <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-necklace"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> جواهرات <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-diamond"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> الماس <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-baby-boy"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> لباس نوزاد <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-fashion"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title">پوشاک فصلی <i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+                <li class="cb-single-category">
+                    <div class="cb-category-icon">
+                        <i class="flaticon-sports"></i>
+                    </div>
+                    <a href="product.html">
+                        <h5 class="cb-category-title"> ورزشی<i class="bi bi-arrow-left"></i></h5>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="topbar-area">
+        <div class="container-fluid p-0">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="topbar-contact d-flex justify-content-center align-items-center">
+                        <div class="topbar-mail">
+                        </div>
+                        <div class="topbar-social-icons">
+                            <ul class="d-flex align-items-center">
+                                <li class="text">دنبال کردن</li>
+
+
+                                <li><a href="#"><i class="flaticon-facebook"></i></a></li>
+                                <li><a href="#"><i class="flaticon-twitter"></i></a></li>
+                                <li><a href="#"><i class="flaticon-pinterest"></i></a></li>
+                                <li><a href="#"><i class="flaticon-instagram-1"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="topbar-sittings d-flex justify-content-center">
+                        <ul class="d-flex">
+                            @if (User.Identity.IsAuthenticated) {
+                                <li><small>سلام : <span class="text-primary">@User.Identity.Name</span></small></li>
+
+                                @if (ClaimUtility.UserInRole(User) == SD.Admin) {
+                                    <li><a href="/Admin/Home/Index">مدیریت فروشگاه</a></li>
+
+                                } else {
+                                    <li><a asp-controller="Home" asp-action="Index">پروفایل کاربری</a></li>
+                                }
+                                <li><a asp-controller="Auth" asp-action="SignOut">خروج</a></li>
+                            } else {
+                                <li><a asp-controller="Auth" asp-action="Login"> ورود</a>/</li>
+                                <li><a asp-controller="Auth" asp-action="Signup"> ثبت نام</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header>
+        <div class="header-area">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xl-2 col-lg-12 col-md-12 col-sm-12 col-xs-12 d-xl-flex align-items-center justify-content-center">
+                        <div class="main-logo d-flex justify-content-between align-items-center">
+                            <a href="index.html">
+                                <img src="~/assets/images/Logo.png" class="logo" alt="">
+                            </a>
+                            <div class="mobile-menu d-flex ">
+                                <a href="javascript:void(0)" class="hamburger d-block d-xl-none">
+                                    <span class="h-top"></span>
+                                    <span class="h-middle"></span>
+                                    <span class="h-bottom"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6 d-flex justify-content-center">
+                        <nav class="main-nav">
+                            <div class="inner-logo">
+                                <a href="index.html"><img src="~/assets/images/logo-w.png" alt=""></a>
+                            </div>
+                            <ul class="nav-item-list">
+                                <li><a href="/">خانه</a></li>
+                                <li><a asp-controller="Shop" asp-action="Index">فروشگاه</a></li>
+                                <li><a href="about.html">درباره ما</a></li>
+                                <li class="has-child-menu">
+                                    <a href="javascript:void(0)">وبلاگ</a>
+                                    <i class="fl flaticon-plus">+</i>
+                                    <ul class="sub-menu">
+                                        <li><a href="blog-grid.html">شبکه وبلاگ</a></li>
+                                        <li><a href="blog-sidebar.html">نوار کناری وبلاگ</a></li>
+                                        <li><a href="blog-details.html">جزئیات وبلاگ</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="contact.html">تماس با ما</a></li>
+                            </ul>
+                            <div class="inner-top">
+                                <div class="inner-mail">
+                                    <i class="flaticon-envelope"></i>
+                                    <a href="mail"><span class="__cf_email__">[ایمیل&#160;محافظت شده]</span></a>
+                                </div>
+                                <div class="inner-tel">
+                                    <i class="flaticon-support"></i>
+                                    <a href="tel:9162352304">9162352304</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div class="col-xl-2 col-2 d-none d-xl-flex p-0 justify-content-end">
+                        <div class="nav-contact-no">
+                            <div class="contact-icon">
+                                <i class="flaticon-phone-call"></i>
+                            </div>
+                            <div class="contact-info">
+                                <p>شماره خط</p>
+                                <a href="tel:+989187504331">09187504331</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    @RenderBody()
+    <div class="footer-area ml-110">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-widget footer-about">
+                        <h5 class="footer-widget-title">درباره فروشگاه</h5>
+                        <p class="about-company">فروشگاه ما بیش از 200 محصول مارک دار را در وب سایت خود می فروشیم.</p>
+                        <div class="footer-contact-actions">
+                            <div class="footer-action"><a href="#">ایران،یزد،خیابان مطهری</a></div>
+                            <div class="footer-action">
+                                <span>ایمیل : </span><a href="#">
+                                    <span class="__cf_email__">[ایمیل&#160;محافظت شده]</span>
+                                </a>
+                            </div>
+                        </div>
+                        <ul class="footer-social-links d-flex">
+                            <li><a href="#"><i class="flaticon-facebook"></i></a></li>
+                            <li><a href="#"><i class="flaticon-twitter"></i></a></li>
+                            <li><a href="#"><i class="flaticon-pinterest"></i></a></li>
+                            <li><a href="#"><i class="flaticon-instagram-1"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-9 ">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h5 class="footer-widget-title">شرکت</h5>
+                                <ul class="footer-links">
+                                    <li><a href="#">حریم خصوصی</a></li>
+                                    <li><a href="#">مرجوعی</a></li>
+                                    <li><a href="#">شرایط و ضوابط</a></li>
+                                    <li><a href="#">پشتیبانی ما</a></li>
+                                    <li><a href="#">شرایط و خدمات</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h5 class="footer-widget-title">لینک های سریع</h5>
+                                <ul class="footer-links">
+                                    <li><a href="about.html">درباره فروشگاه</a></li>
+                                    <li><a href="product.html">مجموعه جدید</a></li>
+                                    <li><a href="product.html">پیراهن زنانه</a></li>
+                                    <li><a href="product.html">لباس مرد</a></li>
+                                    <li><a href="blog-grid.html">آخرین اخبار ما</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h5 class="footer-widget-title">مارک های ما</h5>
+                                <ul class="footer-links">
+                                    <li><a href="#">لویی ویتون</a></li>
+                                    <li><a href="#">پولو رالف لورن</a></li>
+                                    <li><a href="#">خانه های شیک</a></li>
+                                    <li><a href="#">برند اولی </a></li>
+                                    <li><a href="#">برند برتر</a></li>
+                                    <li><a href="#">برند مد</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="footer-widget">
+                                <h5 class="footer-widget-title">فروشگاه های ما</h5>
+                                <ul class="footer-links">
+                                    <li><a href="#">تهران</a></li>
+                                    <li><a href="#">لندن</a></li>
+                                    <li><a href="#">اصفهان</a></li>
+                                    <li><a href="#">ترکیه</a></li>
+                                    <li><a href="#">اسپانیا</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-5">
+                        <div class="footer-copyright">
+                            <p>طراحی و توسعه توسط دایانت : میثم گنجعلی</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/js/jquery-3.6.0.min.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/popper.min.js"></script>
+    <script src="~/assets/js/swiper.js"></script>
+    <script src="~/assets/js/jquery-ui.min.js"></script>
+    <script src="~/assets/js/jquery.fancybox.min.js"></script>
+    <script src="~/assets/js/main.js"></script>
+    @await RenderSectionAsync("Scripts",false)
+</body>
+
+</html>

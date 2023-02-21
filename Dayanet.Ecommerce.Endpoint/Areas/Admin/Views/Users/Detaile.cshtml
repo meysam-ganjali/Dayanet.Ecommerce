@@ -1,0 +1,170 @@
+﻿@model Dayanet.Ecommerce.SharedModels.Dtos.User.UserDto
+@{
+    ViewData["Title"] = "جزئیات کاربر";
+}
+
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">پروفایل کاربر</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">پروفایل کاربر</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="container">
+    <div class="main-body">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex flex-column align-items-center text-center">
+                            <img src="assets/images/avatars/avatar-2.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                            <div class="mt-3">
+                                <h4>@Model.FullName</h4>
+                                <p class="text-secondary mb-1">با نقش کاربری : @Model.Role.Name</p>
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <ul class="list-group list-group-flush">
+                            <li class=" list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <i class="bx bx-health"></i>تعداد علاقه مندی : فعلا ساخته نشده
+                                </h6>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                <h6 class="mb-0">
+                                    <h6 class="mb-0">
+                                        <i class="bx bx-health"></i>تعداد نظرات : فعلا ساخته نشده
+                                    </h6>
+                                </h6>
+                                <span class="text-secondary">example</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">نام کامل</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" readonly class="form-control" value="@Model.FullName">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">ایمیل</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" readonly class="form-control" value="@Model.Email">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">شماره تماس</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <input type="text" readonly class="form-control" value="@Model.CellPhone">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">وضعیت کاربر</h6>
+                            </div>
+                            <ul class="list-group">
+                                @if (Model.IsActive) {
+                                    <li class="list-group-item bg-success">
+                                        کاربر فعال است
+                                    </li>
+                                } else {
+                                    <li class="list-group-item bg-danger text-white">
+                                        کاربر غیر فعال است
+                                    </li>
+                                }
+
+                                @if (Model.LockoutEnabled == true) {
+                                    <li class="list-group-item bg-danger text-white">
+                                        کاربر قفل است
+                                    </li>
+                                } else {
+                                    <li class="list-group-item bg-success">
+                                        قفل کاربر باز است
+                                    </li>
+                                }
+
+                                @if (Model.EmailConfirmed == true) {
+                                    <li class="list-group-item bg-success">
+                                        ایمیل تایید شده
+                                    </li>
+                                } else {
+                                    <li class="list-group-item bg-danger text-white">
+                                        ایمیل تایید نشده
+                                    </li>
+                                }
+
+                                @if (Model.PhoneNumberConfirmed == true) {
+                                    <li class="list-group-item bg-success">
+                                        موبایل تایید شده
+                                    </li>
+                                } else {
+                                    <li class="list-group-item  bg-danger text-white">
+                                        موبایل تایید نشده
+                                    </li>
+                                }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="d-flex align-items-center mb-3">وضعیت پروژه ها</h5>
+                                <p>آدرسهای ثبت شده کاربر</p>
+
+                                <table class="table table-bordered table-borderless table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>آدرس</th>
+                                            <th>عملیات</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.UserAddresses.Count < 1) {
+                                            <tr>
+                                                <td colspan="2">آدرسی یافت نشد</td>
+                                            </tr>
+                                        } else {
+                                            foreach (var item in Model.UserAddresses) {
+                                                <tr>
+                                                    <td>@item.Address</td>
+                                                    <td>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-danger"><i class="bx bx-trash"></i>&nbsp;حذف آدرس</button>
+                                                            <button class="btn btn-primary"><i class="bx bx-edit"></i>&nbsp;بروز رسانی آدرس</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

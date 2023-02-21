@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.Domain", "Dayanet.Ecommerce.Domain\Dayanet.Ecommerce.Domain.csproj", "{435C916B-EE28-4FD9-A6B7-71177EC9B3E7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.DataLayer", "Dayanet.Ecommerce.DataLayer\Dayanet.Ecommerce.DataLayer.csproj", "{828C9545-6979-48CE-8F6F-36D9A19E70C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.Application", "Dayanet.Ecommerce.Application\Dayanet.Ecommerce.Application.csproj", "{5EC787B0-209F-41A0-A135-A964B77845B4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.Endpoint", "Dayanet.Ecommerce.Endpoint\Dayanet.Ecommerce.Endpoint.csproj", "{676928CE-4A5E-4C42-881B-1693FB713CFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.SharedModels", "Dayanet.Ecommerce.SharedModels\Dayanet.Ecommerce.SharedModels.csproj", "{C75A6D3F-429C-4301-B9D0-010544AAC7FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.ModelMapper", "Dayanet.Ecommerce.ModelMapper\Dayanet.Ecommerce.ModelMapper.csproj", "{AD3037BD-0470-4D06-8D2F-09E401B14911}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dayanet.Ecommerce.Comman", "Dayanet.Ecommerce.Comman\Dayanet.Ecommerce.Comman.csproj", "{F63E778A-88E5-40CC-BDB9-D7CE703BD965}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{435C916B-EE28-4FD9-A6B7-71177EC9B3E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{435C916B-EE28-4FD9-A6B7-71177EC9B3E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{435C916B-EE28-4FD9-A6B7-71177EC9B3E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{435C916B-EE28-4FD9-A6B7-71177EC9B3E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{828C9545-6979-48CE-8F6F-36D9A19E70C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{828C9545-6979-48CE-8F6F-36D9A19E70C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{828C9545-6979-48CE-8F6F-36D9A19E70C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{828C9545-6979-48CE-8F6F-36D9A19E70C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EC787B0-209F-41A0-A135-A964B77845B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EC787B0-209F-41A0-A135-A964B77845B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EC787B0-209F-41A0-A135-A964B77845B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EC787B0-209F-41A0-A135-A964B77845B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{676928CE-4A5E-4C42-881B-1693FB713CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{676928CE-4A5E-4C42-881B-1693FB713CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{676928CE-4A5E-4C42-881B-1693FB713CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{676928CE-4A5E-4C42-881B-1693FB713CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C75A6D3F-429C-4301-B9D0-010544AAC7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75A6D3F-429C-4301-B9D0-010544AAC7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75A6D3F-429C-4301-B9D0-010544AAC7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75A6D3F-429C-4301-B9D0-010544AAC7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD3037BD-0470-4D06-8D2F-09E401B14911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD3037BD-0470-4D06-8D2F-09E401B14911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD3037BD-0470-4D06-8D2F-09E401B14911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD3037BD-0470-4D06-8D2F-09E401B14911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63E778A-88E5-40CC-BDB9-D7CE703BD965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63E778A-88E5-40CC-BDB9-D7CE703BD965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63E778A-88E5-40CC-BDB9-D7CE703BD965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63E778A-88E5-40CC-BDB9-D7CE703BD965}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F6E5CA6B-9139-4434-80E8-10D2D0BE29C9}
+	EndGlobalSection
+EndGlobal

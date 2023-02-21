@@ -1,0 +1,79 @@
+﻿@model Dayanet.Ecommerce.SharedModels.Dtos.User.CreateUserDto
+<div class="breadcrumb-area ml-110">
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb-bg d-flex justify-content-center align-items-center">
+                    <div class="breadcrumb-shape1 position-absolute bottom-0 end-0">
+                        <img src="assets/images/shapes/bs-right.png" alt="">
+                    </div>
+                    <div class="breadcrumb-shape2 position-absolute top-0 start-0">
+                        <img src="assets/images/shapes/bs-left.png" alt="">
+                    </div>
+                    <div class="breadcrumb-content text-center">
+                        <h2 class="page-title">حساب</h2>
+                        <ul class="page-switcher d-flex ">
+                            <li><a href="/">خانه</a> <i class="flaticon-arrow-pointing-to-left"></i></li>
+                            <li>ثبت نام</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="register-wrapper ml-110 mt-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="register-switcher text-center">
+                    <a href="/Identity/Account/Register" class="resister-btn active">حساب</a>
+                    <a href="/Identity/Account/Login" class="login-btn">ورود</a>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-100 justify-content-center">
+            <div class="col-xxl-6 col-xl-6 col-lg-8 col-md-10">
+                <div class="reg-login-forms">
+                    <h4 class="reg-login-title text-center">
+                        اکانت خود را ثبت کنید
+                    </h4>
+                    <form method="post" asp-controller="Auth" asp-action="Signup">
+                        <div class="reg-input-group">
+                            <label for="fname">نام و نام خانوادگی*</label>
+                            <input asp-for="FullName" type="text" id="fname" placeholder="نام شما" required="">
+                            <span class="text-danger" asp-validation-for="FullName"></span>
+                        </div>
+                        <div class="reg-input-group">
+                            <label for="email">پست الکترونیک *</label>
+                            <input asp-for="Email" type="email" id="email" placeholder="ایمیل شما" required="">
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="reg-input-group">
+                            <label for="password">کلمه عبور *</label>
+                            <input asp-for="PasswordHash" type="password" id="password" placeholder="رمز عبور را وارد کنید" required="">
+                            <span class="text-danger" asp-validation-for="PasswordHash"></span>
+                        </div>
+                        <div class="reg-input-group">
+                            <label for="sure-pass">تایید رمز عبور *</label>
+                            <input asp-for="ConfirmPassword" type="password" id="sure-pass" placeholder="رمز عبور را تایید کنید" required="">
+                            <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                        </div>
+                        <div class="reg-input-group">
+                            <label for="fname">شماره موبایل *</label>
+                            <input asp-for="CellPhone" type="text" id="fname" placeholder="شماره موبایل " required="">
+                            <span class="text-danger" asp-validation-for="CellPhone"></span>
+                        </div>
+                        <div class="reg-input-group reg-submit-input d-flex align-items-center">
+                            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">ثبت نام</button>
+                        </div>
+                    </form>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

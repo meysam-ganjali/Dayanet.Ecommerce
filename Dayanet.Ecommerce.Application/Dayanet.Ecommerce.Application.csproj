@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Context\" />
+    <Folder Include="FASADE\CategoryAttribute\" />
+    <Folder Include="FASADE\Product\" />
+    <Folder Include="FASADE\Users\" />
+    <Folder Include="FASADE\Slider\" />
+    <Folder Include="Services\Repository\Product\" />
+    <Folder Include="Services\Repository\User\" />
+    <Folder Include="Services\Repository\Role\" />
+    <Folder Include="Services\Repository\Possition\" />
+    <Folder Include="Services\Single\CategoryAttributes\Command\" />
+    <Folder Include="Services\Single\CategoryAttributes\Query\" />
+    <Folder Include="Services\Single\Category\Command\" />
+    <Folder Include="Services\Single\Category\Query\" />
+    <Folder Include="Services\Single\Product\Command\" />
+    <Folder Include="Services\Single\Product\Query\" />
+    <Folder Include="Services\Single\Slider\Command\" />
+    <Folder Include="Services\Single\Slider\Query\" />
+    <Folder Include="Services\Single\User\Query\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Dayanet.Ecommerce.Comman\Dayanet.Ecommerce.Comman.csproj" />
+    <ProjectReference Include="..\Dayanet.Ecommerce.Domain\Dayanet.Ecommerce.Domain.csproj" />
+    <ProjectReference Include="..\Dayanet.Ecommerce.SharedModels\Dayanet.Ecommerce.SharedModels.csproj" />
+  </ItemGroup>
+
+</Project>

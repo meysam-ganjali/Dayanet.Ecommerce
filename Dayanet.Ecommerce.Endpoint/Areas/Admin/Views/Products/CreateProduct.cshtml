@@ -1,0 +1,135 @@
+﻿@model Dayanet.Ecommerce.SharedModels.Dtos.Product.Create.CreateProductDto
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">فروشگاه</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">افزودن محصول جدید</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-4">
+        <h5 class="card-title">افزودن محصول جدید</h5>
+        <hr>
+        <div class="form-body mt-4">
+            <form class="row" method="post" action="/Admin/Products/CreateProduct" enctype="multipart/form-data">
+
+                <div class="col-lg-8">
+                    <div class="border border-3 p-4 rounded">
+                        <div class="mb-3">
+                            <label for="pname" class="form-label">عنوان محصول</label>
+                            <input asp-for="Name" type="text" class="form-control" id="inputProductTitle">
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="des" class="form-label">توضیحات مختصر</label>
+                            <textarea asp-for="ShortDescription" style="width: 100%; height: 100px;"></textarea>
+                            <span class="text-danger" asp-validation-for="ShortDescription"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="des" class="form-label">توضیحات کامل</label>
+                            <textarea asp-for="FullDescription" style="width: 100%; height: 100px;"></textarea>
+                            <span class="text-danger" asp-validation-for="FullDescription"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">تصویر کاور محصول </label>
+                            <input type="file" class="form-control" id="pimg" asp-for="Image" accept="image/*" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">قیمت محصول به تومان</label>
+                            <input type="number" class="form-control" id="pimg" asp-for="Price" />
+                            <span class="text-danger" asp-validation-for="Price"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"> دسته محصول</label>
+                            <select class="form-select select2" asp-for="CategoryId" asp-items="@ViewBag.Category">
+                            </select>
+                            <span class="text-danger" asp-validation-for="ShowOnHomepage"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="border border-3 p-4 rounded">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="pprice" class="form-label">نحوه نمایش</label>
+                                <select class="form-select" asp-for="IsShow">
+                                    <option value="true">نمایش بده</option>
+                                    <option value="false">مخفی باشد</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="IsShow"></span>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"> محصول ویژه</label>
+                                <select class="form-select" asp-for="IsSotialProduct">
+                                    <option value="true">بلی</option>
+                                    <option value="false">خیر</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="IsSotialProduct"></span>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"> نمایش در خانه</label>
+                                <select class="form-select" asp-for="ShowOnHomepage">
+                                    <option value="true">بلی</option>
+                                    <option value="false">خیر</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="ShowOnHomepage"></span>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label"> فعال سازی نضرات</label>
+                                <select class="form-select" asp-for="AllowCustomerComment">
+                                    <option value="true">بلی</option>
+                                    <option value="false">خیر</option>
+                                </select>
+                                <span class="text-danger" asp-validation-for="AllowCustomerComment"></span>
+                            </div>
+                           
+                            <div class="mb-3">
+                                <label class="form-label">وزن محصول</label>
+                                <input type="number" class="form-control" asp-for="Weight" />
+                                <span class="text-danger" asp-validation-for="Weight"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">عرض محصول</label>
+                                <input type="number" class="form-control" asp-for="Width" />
+                                <span class="text-danger" asp-validation-for="Width"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">طول محصول</label>
+                                <input type="number" class="form-control" asp-for="Length" />
+                                <span class="text-danger" asp-validation-for="Length"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">ارتفاع محصول</label>
+                                <input type="number" class="form-control" asp-for="Height" />
+                                <span class="text-danger" asp-validation-for="Height"></span>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">ذخیره محصول</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!--end row-->
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial"/>
+    <link rel="stylesheet" type="text/css" href="~/admin/assets/libs/select2/dist/css/select2.min.css">
+    <script src="~/admin/assets/libs/select2/dist/js/select2.full.min.js"></script>
+    <script src="~/admin/assets/libs/nicEdit/nicejs.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        bkLib.onDomLoaded(nicEditors.allTextAreas);
+        $(".select2").select2();
+    </script>
+}

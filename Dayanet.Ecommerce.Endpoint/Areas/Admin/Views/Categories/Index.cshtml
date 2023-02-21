@@ -1,0 +1,235 @@
+﻿@model IEnumerable<Dayanet.Ecommerce.SharedModels.Dtos.Category.CategoryDto>
+@{
+    ViewData["Title"] = "لیست  دسته بندی";
+}
+
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">دسته بندی</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لیست دسته ها</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <form action="/Admin/Categories/Index">
+            <div class="input-group mb-3">
+                <input type="text" name="filter" class="form-control" placeholder="قسمتی از نام را وارد کنید" aria-label="جستجو برا دسته بندی">
+                <button class="input-group-text btn btn-primary"><i class="bx bx-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button text-center  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            ثبت دسته بندی
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="row justify-content-center">
+                                <div class="col-9">
+                                    <form method="post" action="/Admin/Categories/CreateCategory">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-light">عنوان دسته</span>
+                                            <input name="Name" type="text" class="form-control">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-light" id="basic-addon1">دسته بندی والد</span>
+                                            <select name="ParentCategoryId" asp-items="@ViewBag.Category" class="form-select">
+                                                <option value="null">--انتخاب کنید--</option>
+                                            </select>
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-light" id="basic-addon1">توضیحات</span>
+                                            <textarea class="form-control" name="Description"></textarea>
+                                        </div>
+
+                                        <div class="row justify-content-around">
+                                            <button type="submit" class="btn btn-success d-inline"><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">نام</th>
+                            <th scope="col">تعداد زیرمجموعه</th>
+                            <th scope="col">تعداد مشخصه ها</th>
+                            <th scope="col">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ToList().Count < 1) {
+                            <tr class="alert alert-danger">
+                                <td colspan="5" class="text-center">دسته بندی برای نمایش یافت نشد ابتدا یک دسته ثبت کنید!</td>
+                            </tr>
+                        } else {
+                            foreach (var cat in Model) {
+                                <tr>
+                                    <td>@cat.Id</td>
+                                    <td>@cat.Name</td>
+                                    @if (cat.SubCategories.Count < 1) {
+                                        <td>فاقد زیرمجموعه</td>
+                                    } else {
+                                        <td>@cat.SubCategories.Count</td>
+                                    }
+                                    @if (cat.CategoryAttributes.Count < 1) {
+                                        <td>فاقد مشخصات</td>
+                                    } else {
+                                        <td>@cat.CategoryAttributes.Count</td>
+                                    }
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                                <span class="visually-hidden">فهرست کشویی</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                                <button onclick="ShowModalUpdateCategory('@cat.Id','@cat.Name','@cat.Description','@cat.ParentCategoryId')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</button>
+                                                @if (cat.SubCategories.Count > 0) {
+                                                    <a href="/Admin/Categories/Index/@cat.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;مشاهده زیرمجموعه</a>
+                                                }
+                                                <a href="/Admin/CategoryAttributes/CategoryAttributeIndex/@cat.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;مشاهده مشخصات</a>
+                                                <button onclick="DeleteParent('@cat.Id', '@cat.Name')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function ShowModalUpdateCategory(id, name, des, parentId) {
+            $('#editCatId').val(id);
+            $('#editCatName').val(name);
+            $('#editCatDes').val(des);
+            $('#editCatparentId').val(parentId);
+            $('#EditCategory').modal('show');
+        }
+        function DeleteParent(parentId, title) {
+            swal.fire({
+                title: 'حذف دسته بندی ' + ' ( ' + title + ' )',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+
+                    var postData = {
+                        'id': parentId
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Categories/RemoveCategory/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+    </script>
+}
+@section Modals
+    {
+    <div class="modal" id="EditCategory" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white">ویرایش دسته  <span id="parent_title"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Categories/UpdateCategory">
+                        <input name="Id" type="hidden" id="editCatId" />
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light">عنوان دسته</span>
+                            <input name="Name" id="editCatName" type="text" class="form-control" aria-label="Parent Category Title" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">دسته والد</span>
+                            <select name="ParentCategoryId" asp-items="@ViewBag.Category" class="form-select">
+                                <option value="null">--انتخاب کنید--</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">توضیحات</span>
+                            <textarea class="form-control" name="Description" id="editCatDes"></textarea>
+                        </div>
+
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

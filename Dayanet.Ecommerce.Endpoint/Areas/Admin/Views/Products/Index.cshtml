@@ -1,0 +1,210 @@
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model Dayanet.Ecommerce.SharedModels.Dtos.Product.Get.ProductForAdminDto
+@{
+    ViewData["Title"] = "لیست محصولات اصلی";
+}
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">محصولات</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin/Index"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لیست محصول</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <form action="/Admin/Products/Index">
+            <div class="input-group mb-3">
+                <input type="text" name="searchKey" class="form-control" placeholder="قسمتی از نام را وارد کنید" aria-label="جستجو برا محصولات">
+                <button class="input-group-text btn btn-primary"><i class="bx bx-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="row justify-content-between">
+            <div class="col-md-6 col-sm-12">
+                <h6 class="mb-0 text-uppercase text-right">محصولات موجود</h6>
+            </div>
+            <div class="col-md-6 col-sm-12 d-flex justify-content-end">
+                <a href="/Admin/Products/CreateProduct" class="btn btn-success text-left"><i class="bx bx-plus"></i>&nbsp;&nbsp;ثبت محصول جدید</a>
+            </div>
+        </div>
+        <hr/>
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">کاور</th>
+                        <th scope="col">نام</th>
+                        @*    <th scope="col">تعداد باقیمانده</th*@>
+                        <th scope="col">قیمت</th>
+                        <th scope="col">دسته</th>
+                        <th scope="col">نوع نمایش</th>
+                        <th scope="col">عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if (Model.Products.ToList().Count < 1) {
+                        <tr class="alert alert-danger">
+                            <td colspan="8" class="text-center">محصولی برای نمایش یافت نشد ابتدا یک محصول ثبت کنید!</td>
+                        </tr>
+                    } else {
+                        foreach (var p in Model.Products) {
+                            <tr>
+                                <td>@p.Id</td>
+                                @if (!string.IsNullOrWhiteSpace(p.ImageCoverPath)) {
+                                    <td><img src="~/@p.ImageCoverPath" width="60" height="60" /></td>
+                                } else {
+                                    <td><img src="~/assets/images/noImage.jpg" width="60" height="60" /></td>
+                                }
+                                <td>@p.Name</td>
+                                @*  <td><i class="badge bg-success">@p.Inventories.Select(x=>x.ProductCount).FirstOrDefault()  عدد</i></td>*@
+                                <td>@p.Price.ToString("#,##") تومان</td>
+                                <td>@p.CategoryName</td>
+                                <td>@(p.IsShow ? "آشکار" : "مخفی")</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                        <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                            <span class="visually-hidden">فهرست کشویی</span>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                            <button onclick="ShowModalAddToInventory('@p.Id')" class="dropdown-item"><i class="bx bx-archive-in"></i>&nbsp;ثبت تعداد در انبار</button>
+                                            <a href="/Admin/Product/UpdateProduct/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</a>
+                                            <a href="/Admin/Product/ProductDetails/@p.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;جزئیات</a>
+                                            <button onclick="DeleteProductSweet('@p.Id','@p.Name')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                   
+                </table>
+                <div class="row mt-3">
+                    <div class="col-12  text-center">
+                        <paging  total-records="@Model.RowCount"
+                                page-no="@Model.CurrentPage"
+                                page-size="@Model.PageSize"
+                                show-prev-next="true"
+                                show-total-pages="false"
+                                show-total-records="false"
+                                show-page-size-nav="true"
+                                show-first-numbered-page="true"
+                                show-last-numbered-page="true"
+                                query-string-key-page-no="Page"
+                                query-string-key-page-size="PageSize"
+                                sr-text-next="بعدی"
+                                sr-text-previous="قبلی"
+                                gap-size="2">
+                        </paging>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function ShowModalAddToInventory(productId) {
+            $('#Product_ID_inventory').val(productId);
+            $('#AddToInventory').modal('show');
+        }
+        function DeleteProductSweet(Id, title) {
+            swal.fire({
+                title: 'حذف  ' + ' ( ' + title + ' )',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/RemoveProduct/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+    </script>
+}
+@section Modals
+    {
+    <div class="modal" id="AddToInventory" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white">افزودن کالا به انبار</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Products/AddToInventory">
+                        <input name="ProductId" type="hidden" id="Product_ID_inventory" />
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> مقدار محصول</span>
+                            <input name="ProductCount" type="number" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> شناسه محصول در انبار</span>
+                            <input name="SKU" type="text" readonly class="form-control" value="@Guid.NewGuid().ToString()">
+                        </div>
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

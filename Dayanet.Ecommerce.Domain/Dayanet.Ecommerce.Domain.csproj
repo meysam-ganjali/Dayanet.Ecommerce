@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\Auth\" />
+    <Folder Include="Entities\Ecommerce\" />
+    <Folder Include="Entities\Common\" />
+    <Folder Include="Entities\ProductCommon\" />
+    <Folder Include="Entities\ShoppingOrder\" />
+    <Folder Include="Entities\ShoopingCart\" />
+  </ItemGroup>
+
+</Project>

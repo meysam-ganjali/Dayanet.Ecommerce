@@ -1,0 +1,194 @@
+﻿@model IEnumerable<Dayanet.Ecommerce.SharedModels.Dtos.Banner.BannerDto>
+@{
+    ViewData["Title"] = "لیست  بنرر ها";
+}
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">بنرر</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لیست بنررها</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <form action="/Admin/Categories/Index">
+            <div class="input-group mb-3">
+                <input type="text" name="filter" class="form-control" placeholder="قسمتی از نام را وارد کنید">
+                <button class="input-group-text btn btn-primary"><i class="bx bx-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">تصویر</th>
+                            <th scope="col">مکان</th>
+                            <th scope="col">عنوان</th>
+                            <th scope="col">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ToList().Count < 1) {
+                            <tr class="alert alert-danger">
+                                <td colspan="5" class="text-center">بنری برای نمایش یافت نشد ابتدا یک بنر ثبت کنید!</td>
+                            </tr>
+                        } else {
+                            foreach (var Banner in Model) {
+                                <tr>
+                                    <td>@Banner.Id</td>
+                                    <td>
+                                        <img src="~/@Banner.ImagePath" width="100" height="65" class="img-thumbnail" id="Banner_img_@Banner.Id" />
+                                    </td>
+                                    <td>@Banner.Possition.PossitionNameFA (@Banner.Possition.ProssitionNameEN)</td>
+                                    <td><a href="@Banner.Link" class="text-reset text-info">@Banner.Title</a></td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                                <span class="visually-hidden">فهرست کشویی</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                                <button onclick="ShowModalUpdateBanner('@Banner.Id','@Banner.Title','@Banner.Description','@Banner.Link','@Banner.Possition')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</button>
+                                                <button onclick="DeleteBanner('@Banner.Id','@Banner.Title')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function ShowModalUpdateBanner(id, title, des, link, poss) {
+            $('#editBannerId').val(id);
+            $('#editBannerTitle').val(title);
+            $('#editBannerDescription').val(des);
+            $('#editBannerLink').val(link);
+            $('#editBannerPossition').val(poss);
+            $('#edit_Banner_img').attr('src', $('#Banner_img_' + id).attr('src'));
+            $('#EditBanner').modal('show');
+        }
+        function DeleteBanner(sId, title) {
+            swal.fire({
+                title: 'حذف بنرر ' + ' ' + title,
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+
+                    var postData = {
+                        'id': sId
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Banners/DeleteBanner/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+    </script>
+}
+@section Modals
+    {
+    <div class="modal" id="EditBanner" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <h5 class="modal-title text-white">ویرایش بنرر <span id="parent_title"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Banners/UpdateBanner" enctype="multipart/form-data">
+                        <input name="Id" type="hidden" id="editBannerId" />
+                        <div class="row">
+                            <img id="edit_Banner_img" width="100" height="90" class="mt-1" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light">عنوان بنر</span>
+                            <input name="Title" id="editBannerTitle" type="text" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">تصویر بنرر</span>
+                            <input name="Image" type="file" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">مکان بنر</span>
+                            <select asp-items="@ViewBag.Possition" class="form-select" id="editBannerPossition" name="PossitionId"></select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">لینک بنر</span>
+                            <input name="Link" type="text" id="editBannerLink" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">توضیحات</span>
+                            <textarea class="form-control" name="Description" id="editBannerDescription"></textarea>
+                        </div>
+
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,794 @@
+﻿@{
+    ViewData["Title"] = "داشبرد";
+}
+<div class="row row-cols-1 row-cols-lg-4">
+    <div class="col">
+        <div class="card radius-10 overflow-hidden bg-gradient-cosmic">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">مجموع سفارشات</p>
+                        <h5 class="mb-0 text-white">867</h5>
+                    </div>
+                    <div class="ms-auto text-white">
+                        <i class='bx bx-cart font-30'></i>
+                    </div>
+                </div>
+                <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 46%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10 overflow-hidden bg-gradient-burning">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">مجموع درآمد</p>
+                        <h5 class="mb-0 text-white">52,945 تومان</h5>
+                    </div>
+                    <div class="ms-auto text-white">
+                        <i class='bx bx-wallet font-30'></i>
+                    </div>
+                </div>
+                <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 72%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10 overflow-hidden bg-gradient-Ohhappiness">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">مجموع کاربران</p>
+                        <h5 class="mb-0 text-white">24.5K</h5>
+                    </div>
+                    <div class="ms-auto text-white">
+                        <i class='bx bx-bulb font-30'></i>
+                    </div>
+                </div>
+                <div class="progress bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 68%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card radius-10 overflow-hidden bg-gradient-moonlit">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="mb-0 text-white">دیدگاه</p>
+                        <h5 class="mb-0 text-white">869</h5>
+                    </div>
+                    <div class="ms-auto text-white">
+                        <i class='bx bx-chat font-30'></i>
+                    </div>
+                </div>
+                <div class="progress  bg-white-2 radius-10 mt-4" style="height:4.5px;">
+                    <div class="progress-bar bg-white" role="progressbar" style="width: 66%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end row-->
+
+<div class="card radius-10">
+    <div class="card-header border-bottom-0 bg-transparent">
+        <div class="d-lg-flex align-items-center">
+            <div>
+                <h6 class="font-weight-bold mb-2 mb-lg-0">درآمد ماهانه</h6>
+            </div>
+            <div class="ms-lg-auto mb-2 mb-lg-0">
+                <div class="btn-group-round">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-white">روز</button>
+                        <button type="button" class="btn btn-white">هفته</button>
+                        <button type="button" class="btn btn-white">ماه</button>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary radius-10 ms-lg-3">
+                    دانلود با فرمت
+                    CSV
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="chart1"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 col-lg-8">
+        <div class="card radius-10">
+            <div class="card-header border-bottom-0 bg-transparent">
+                <div class="d-lg-flex align-items-center">
+                    <div>
+                        <h6 class="font-weight-bold mb-2 mb-lg-0">تجزیه و تحلیل تاریخی</h6>
+                    </div>
+                    <div class="font-22 ms-auto">
+                        <i class="bx bx-dots-horizontal-rounded"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center ms-auto font-13 gap-2">
+                    <span class="border px-1 rounded cursor-pointer">
+                        <i class="bx bxs-circle text-danger me-1"></i>بازدیدکنندگان
+                    </span>
+                    <span class="border px-1 rounded cursor-pointer">
+                        <i class="bx bxs-circle text-success me-1"></i>گفتگو ها
+                    </span>
+                    <span class="border px-1 rounded cursor-pointer">
+                        <i class="bx bxs-circle text-info me-1"></i>بازدید صفحه
+                    </span>
+                </div>
+                <div id="chart2"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-4">
+        <div class="card radius-10 bg-primary">
+            <div class="card-body">
+                <h6 class="text-white">بازدیدکنندگان فعال</h6>
+                <h4 class="font-weight-bold text-white">3467</h4>
+                <p class="font-13 text-white">بازدید صفحه در هر دقیقه</p>
+                <div id="chart3"></div>
+            </div>
+        </div>
+        <div class="card radius-10">
+            <div class="card-body">
+                <div class="revenue-by-channel">
+                    <h6 class="mb-4 font-weight-bold">درآمد به وسیله کانال</h6>
+                    <div class="progress-wrapper">
+                        <div class="d-flex align-items-center">
+                            <div class="text-secondary">مستقیم</div>
+                            <div class="ms-auto pe-4">1,274,685 تومان</div>
+                            <div class="text-success">65.6%</div>
+                        </div>
+                        <div class="progress mt-2" style="height:3px;">
+                            <div class="progress-bar" role="progressbar" style="width: 65%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-wrapper mt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-secondary">ارجاعی</div>
+                            <div class="ms-auto pe-4">1,222,863 تومان</div>
+                            <div class="text-success">45.6%</div>
+                        </div>
+                        <div class="progress mt-2" style="height:3px;">
+                            <div class="progress-bar" role="progressbar" style="width: 55%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-wrapper mt-3">
+                        <div class="d-flex align-items-center">
+                            <div class="text-secondary">شبکه اجتماعی</div>
+                            <div class="ms-auto pe-4">1,274,685 تومان</div>
+                            <div class="text-danger">25.2%</div>
+                        </div>
+                        <div class="progress mt-2" style="height:3px;">
+                            <div class="progress-bar" role="progressbar" style="width: 35%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end row-->
+<div class="row">
+    <div class="col-12 col-lg-6 d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="font-weight-bold mb-0">وضعیت سفارش</h6>
+                    </div>
+                    <div class="dropdown ms-auto">
+                        <div class="cursor-pointer text-dark font-24 dropdown-toggle dropdown-toggle-nocaret"
+                             data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-horizontal-rounded"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-end">
+                            <a class="dropdown-item" href="javaScript:;">عمل</a>
+                            <a class="dropdown-item" href="javaScript:;">عمل دیگر</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javaScript:;">هر چیز دیگر اینجا</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="chart4"></div>
+                <div class="d-flex align-items-center justify-content-between text-center">
+                    <div>
+                        <h5 class="mb-1 font-weight-bold">289</h5>
+                        <p class="mb-0 text-secondary">تحویل داده شده</p>
+                    </div>
+                    <div class="mb-1">
+                        <h5 class="mb-1 font-weight-bold">348</h5>
+                        <p class="mb-0 text-secondary">در حال پردازش</p>
+                    </div>
+                    <div>
+                        <h5 class="mb-1 font-weight-bold">152</h5>
+                        <p class="mb-0 text-secondary">لغو شده</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 d-flex">
+        <div class="card w-100 radius-10 shadow-none bg-transparent">
+            <div class="card-body p-0">
+                <div class="card radius-10 bg-primary">
+                    <div class="card-body">
+                        <div id="chart5"></div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h4 class="mb-0 font-weight-bold text-white">534,680 تومان</h4>
+                                <p class="mb-0 text-white">میانگین فروش هفتگی</p>
+                            </div>
+                            <div>
+                                <i class='bx bx-diamond font-24 text-white'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col">
+                        <div class="card radius-10 mb-sm-0">
+                            <div class="card-body">
+                                <div id="chart6"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card radius-10 mb-0">
+                            <div class="card-body">
+                                <div id="chart7"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end row-->
+
+<div class="row row-cols-1 row-cols-lg-3">
+    <div class="col d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="font-weight-bold mb-0">محصولات پُرفروش</h6>
+                    </div>
+                    <div class="dropdown ms-auto">
+                        <div class="cursor-pointer text-dark font-24 dropdown-toggle dropdown-toggle-nocaret"
+                             data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-horizontal-rounded"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javaScript:;">عمل</a>
+                            <a class="dropdown-item" href="javaScript:;">عمل دیگر</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javaScript:;">هر چیز دیگر اینجا</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="best-selling-products p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/ice-cream-cornet.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">بستنی قیفی</h6>
+                        <p class="mb-0 text-secondary">29,000 تومان/هر عدد 56 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">521,520 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/wine-glass.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">آب میوه</h6>
+                        <p class="mb-0 text-secondary">30,000 تومان/هر عدد 48 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">406,520 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/banana.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">اسباب بازی موز</h6>
+                        <p class="mb-0 text-secondary">26,000 تومان/هر عدد 66 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">685,690 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/telephone.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">تلفن قدیمی</h6>
+                        <p class="mb-0 text-secondary">39,000 تومان/هر عدد 26 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">913,720 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/plate.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">پرتقال</h6>
+                        <p class="mb-0 text-secondary">22,000 تومان/هر عدد 34 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">372,620 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/telephone.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">تلفن قدیمی</h6>
+                        <p class="mb-0 text-secondary">39,000 تومان/هر عدد 26 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">913,720 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/banana.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">اسباب بازی موز</h6>
+                        <p class="mb-0 text-secondary">26,000 تومان/هر عدد 66 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">685,690 تومان</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/wine-glass.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">آب میوه</h6>
+                        <p class="mb-0 text-secondary">30,000 تومان/هر عدد 48 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">406,520 تومان</p>
+                </div>
+                <hr>
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/ice-cream-cornet.png" class="p-1" class=""
+                             alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">بستنی قیفی</h6>
+                        <p class="mb-0 text-secondary">29,000 تومان/هر عدد 56 سفارش</p>
+                    </div>
+                    <p class="ms-auto mb-0 text-purple">521,520 تومان</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="font-weight-bold mb-0">بررسی های اخیر</h6>
+                    </div>
+                    <div class="dropdown ms-auto">
+                        <div class="cursor-pointer text-dark font-24 dropdown-toggle dropdown-toggle-nocaret"
+                             data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-horizontal-rounded"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javaScript:;">عمل</a>
+                            <a class="dropdown-item" href="javaScript:;">عمل دیگر</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javaScript:;">هر چیز دیگر اینجا</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recent-reviews p-3 mb-3">
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/banana.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">اسباب بازی موز</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/telephone.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">تلفن قدیمی</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/wine-glass.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">آب میوه</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/plate.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">پرتقال</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/ice-cream-cornet.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">بستنی قیفی</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/telephone.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">تلفن قدیمی</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/wine-glass.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">آب میوه</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+                <hr />
+                <div class="d-flex align-items-center">
+                    <div class="product-img">
+                        <img src="~/admin/assets/images/icons/plate.png" class="p-1" alt="" />
+                    </div>
+                    <div class="ps-3">
+                        <h6 class="mb-0 font-weight-bold">پرتقال</h6>
+                    </div>
+                    <p class="ms-auto mb-0"><i class='bx bxs-star text-warning mr-1'></i> 5.00</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col d-flex">
+        <div class="card radius-10 w-100">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <h6 class="font-weight-bold mb-0">صندوق دریافت</h6>
+                    </div>
+                    <div class="dropdown ms-auto">
+                        <div class="cursor-pointer text-dark font-24 dropdown-toggle dropdown-toggle-nocaret"
+                             data-bs-toggle="dropdown">
+                            <i class="bx bx-dots-horizontal-rounded"></i>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="javaScript:;">عمل</a>
+                            <a class="dropdown-item" href="javaScript:;">عمل دیگر</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javaScript:;">هر چیز دیگر اینجا</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="support-list p-3 mb-3">
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-1.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            پدرام شریفی <span class="text-primary float-end font-13">2 ساعت قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            مورد من برای اصلاح آدرس ارسال نمی شود.
+                            لطفا آن را بررسی کنید
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-2.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            پریسا توکلی <span class="text-primary float-end font-13">3 ساعت قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            شما رنگ های مختلفی را ارسال کردید ، من
+                            نیاز دارم که تغییر کند
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-3.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            رضا افشار <span class="text-primary float-end font-13">12 ساعت قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            میشه لطفا پولم رو پس بدید دیگر نمی خواهم
+                            صبر کنم
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-4.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            ساناز حسینی <span class="text-primary float-end font-13">دیروز</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            لطفاً تلفن مرا برگردانید. آن iPhon7 نیست.
+                            من درخواست های زیادی برای شما ارسال می کردم
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-5.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            امیر صبوری <span class="text-primary float-end font-13">2 روز قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            سلام ، من به محصول الگوی مدیر نیاز دارم.
+                            چگونه می توانم خرید کنم؟
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-2.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            پریسا توکلی <span class="text-primary float-end font-13">3 ساعت قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            شما رنگ های مختلفی را ارسال کردید ، من
+                            نیاز دارم که تغییر کند
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-3.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            رضا افشار <span class="text-primary float-end font-13">12 ساعت قبل</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            میشه لطفا پولم رو پس بدید دیگر نمی خواهم
+                            صبر کنم
+                        </p>
+                    </div>
+                </div>
+                <hr />
+                <div class="d-flex align-items-top">
+                    <div class="">
+                        <img src="~/admin/assets/images/avatars/avatar-4.png" width="45" height="45"
+                             class="rounded-circle" alt="" />
+                    </div>
+                    <div class="ps-2">
+                        <h6 class="mb-1 font-weight-bold">
+                            ساناز حسینی <span class="text-primary float-end font-13">دیروز</span>
+                        </h6>
+                        <p class="mb-0 font-13 text-secondary">
+                            لطفاً تلفن مرا برگردانید. آن iPhon7 نیست.
+                            من درخواست های زیادی برای شما ارسال می کردم
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--end row-->
+
+<div class="card radius-10">
+    <div class="card-header border-bottom-0 bg-transparent">
+        <div class="d-flex align-items-center">
+            <div>
+                <h5 class="font-weight-bold mb-0">سفارشات اخیر</h5>
+            </div>
+            <div class="ms-auto">
+                <button type="button" class="btn btn-white radius-10">مشاهده بیشتر</button>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th>تصویر</th>
+                        <th>نام محصول</th>
+                        <th>مشتری</th>
+                        <th>کد محصول</th>
+                        <th>قیمت</th>
+                        <th>وضعیت</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/shoes.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>کتونی ورزشی نایک</td>
+                        <td>پدرام شریفی</td>
+                        <td>9668521#</td>
+                        <td>919,850 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-success radius-30">
+                                تحویل داده
+                                شده
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/smartphone.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>گوشی هوشمند</td>
+                        <td>پریسا توکلی</td>
+                        <td>8627523#</td>
+                        <td>959,350 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-danger radius-30">لغو شده</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/mouse.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>ماوس حرفه ای</td>
+                        <td>ساناز حسینی</td>
+                        <td>6875954#</td>
+                        <td>49,680 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-warning radius-30">
+                                در حال
+                                ارسال
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/tshirt.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>تی شرت کتان</td>
+                        <td>پریسا توکلی</td>
+                        <td>4587892#</td>
+                        <td>320,780 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-success radius-30">
+                                تحویل داده
+                                شده
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/headphones.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>هدفون جدید</td>
+                        <td>رضا افشاری</td>
+                        <td>5587426#</td>
+                        <td>290,520 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-success radius-30">
+                                تحویل داده
+                                شده
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/mouse.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>ماوس حرفه ای</td>
+                        <td>ساناز حسینی</td>
+                        <td>6875954#</td>
+                        <td>49,680 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-warning radius-30">
+                                در حال
+                                ارسال
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="product-img bg-transparent border">
+                                <img src="~/admin/assets/images/icons/tshirt.png" class="p-1" alt="">
+                            </div>
+                        </td>
+                        <td>تی شرت کتان</td>
+                        <td>پریسا توکلی</td>
+                        <td>4587892#</td>
+                        <td>320,780 تومان</td>
+                        <td>
+                            <a href="javaScript:;" class="btn btn-sm btn-success radius-30">
+                                تحویل داده
+                                شده
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

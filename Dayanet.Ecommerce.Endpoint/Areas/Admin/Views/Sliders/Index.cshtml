@@ -1,0 +1,194 @@
+﻿@model IEnumerable<Dayanet.Ecommerce.SharedModels.Dtos.Slider.SliderDto>
+@{
+    ViewData["Title"] = "لیست  اسلایدر ها";
+}
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">اسلایدر</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لیست اسلایدرها</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="ms-auto">
+        <form action="/Admin/Categories/Index">
+            <div class="input-group mb-3">
+                <input type="text" name="filter" class="form-control" placeholder="قسمتی از نام را وارد کنید">
+                <button class="input-group-text btn btn-primary"><i class="bx bx-search"></i></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">تصویر</th>
+                            <th scope="col">مکان</th>
+                            <th scope="col">عنوان</th>
+                            <th scope="col">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ToList().Count < 1) {
+                            <tr class="alert alert-danger">
+                                <td colspan="5" class="text-center">اسلایدی برای نمایش یافت نشد ابتدا یک اسلاید ثبت کنید!</td>
+                            </tr>
+                        } else {
+                            foreach (var slider in Model) {
+                                <tr>
+                                    <td>@slider.Id</td>
+                                    <td>
+                                        <img src="~/@slider.ImagePath" width="100" height="65" class="img-thumbnail" id="slider_img_@slider.Id" />
+                                    </td>
+                                    <td>@slider.Possition.PossitionNameFA (@slider.Possition.ProssitionNameEN)</td>
+                                    <td><a href="@slider.Link" class="text-reset text-info">@slider.Title</a></td>
+
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                                <span class="visually-hidden">فهرست کشویی</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                                <button onclick="ShowModalUpdateSlider('@slider.Id','@slider.Title','@slider.Description','@slider.Link','@slider.Possition')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</button>
+                                                <button onclick="DeleteSlider('@slider.Id','@slider.Title')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function ShowModalUpdateSlider(id, title, des, link, poss) {
+            $('#editSliderId').val(id);
+            $('#editSliderTitle').val(title);
+            $('#editSliderDescription').val(des);
+            $('#editSliderLink').val(link);
+            $('#editSliderPossition').val(poss);
+            $('#edit_Slider_img').attr('src', $('#slider_img_' + id).attr('src'));
+            $('#EditSlider').modal('show');
+        }
+        function DeleteSlider(sId, title) {
+            swal.fire({
+                title: 'حذف اسلایدر ' + ' ' + title,
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+
+                    var postData = {
+                        'id': sId
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Sliders/DeleteSlider/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+    </script>
+}
+@section Modals
+    {
+    <div class="modal" id="EditSlider" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-secondary">
+                    <h5 class="modal-title text-white">ویرایش اسلایدر <span id="parent_title"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Sliders/UpdateSlider" enctype="multipart/form-data">
+                        <input name="Id" type="hidden" id="editSliderId" />
+                        <div class="row">
+                            <img id="edit_Slider_img" width="100" height="90" class="mt-1"/>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light">عنوان اسلاید</span>
+                            <input name="Title" id="editSliderTitle" type="text" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">تصویر اسلایدر</span>
+                            <input name="Image" type="file" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">مکان اسلاید</span>
+                            <select asp-items="@ViewBag.Possition" class="form-select" id="editSliderPossition" name="PossitionId"></select>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">لینک اسلاید</span>
+                            <input name="Link" type="text" id="editSliderLink" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">توضیحات</span>
+                            <textarea class="form-control" name="Description" id="editSliderDescription"></textarea>
+                        </div>
+
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,205 @@
+﻿@model IEnumerable<Dayanet.Ecommerce.SharedModels.Dtos.Role.RoleDto>
+@{
+    ViewData["Title"] = "لیست نقشهای سیستم احراز هویت";
+}
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">نقش</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/َAdmin"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">لیست نقشها</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                        <button class="accordion-button text-center  collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            ثبت نقش جدید
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">
+                            <div class="row justify-content-center">
+                                <div class="col-9">
+                                    <form method="post" action="/Admin/Roles/CreateRole">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-light">عنوان دسته</span>
+                                            <input name="Name" type="text" class="form-control">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text bg-light" id="basic-addon1">فعال/غیرفعال</span>
+                                            <select name="IsShow" asp-items="@ViewBag.Category" class="form-select">
+                                                <option value="true">فعال باشد</option>
+                                                <option value="false">غیرفعال باشد</option>
+                                            </select>
+                                        </div>
+                                        <div class="row justify-content-around">
+                                            <button type="submit" class="btn btn-success d-inline"><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <table class="table mb-0 table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">نام</th>
+                            <th scope="col">تعداد کاربر در این نقش</th>
+                            <th scope="col">عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ToList().Count < 1) {
+                            <tr class="alert alert-danger">
+                                <td colspan="5" class="text-center">نقشی ای برای نمایش یافت نشد ابتدا یک نقش ثبت کنید!</td>
+                            </tr>
+                        } else {
+                            foreach (var role in Model) {
+                                <tr>
+                                    <td>@role.Id</td>
+                                    <td>@role.Name</td>
+                                    <td>@role.Users.Count</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                                <span class="visually-hidden">فهرست کشویی</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                                <button onclick="ShowModalUpdateRole('@role.Id','@role.Name','@role.IsShow')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</button>
+                                                <button onclick="DeleteRole('@role.Id')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
+                                                <button class="dropdown-item"><i class="bx bx-user"></i>&nbsp;لیست کاربران</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    <script>
+        function ShowModalUpdateRole(id, name,active) {
+            $('#editroleId').val(id);
+            $('#editroleName').val(name);
+            $('#editroleActive').val(active);
+        
+            $('#EditRole').modal('show');
+        }
+        function DeleteRole(Id, title) {
+            swal.fire({
+                title: 'حذف نقش ' + ' ( ' + title + ' )',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+
+                    var postData = {
+                        'id': Id
+                    };
+
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Roles/DeleteRole/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+    </script>
+}
+@section Modals
+    {
+    <div class="modal" id="EditRole" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white">ویرایش نقش  <span id="parent_title"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Roles/UpdateRole">
+                        <input name="Id" type="hidden" id="editroleId" />
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light">عنوان دسته</span>
+                            <input name="Name" type="text" id="editroleName" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1">فعال/غیرفعال</span>
+                            <select name="IsShow" id="editroleActive" class="form-select">
+                                <option value="true">فعال باشد</option>
+                                <option value="false">غیرفعال باشد</option>
+                            </select>
+                        </div>
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
