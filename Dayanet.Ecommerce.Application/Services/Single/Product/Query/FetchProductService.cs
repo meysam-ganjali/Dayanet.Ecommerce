@@ -1,7 +1,10 @@
 ﻿using Dayanet.Ecommerce.Application.Context;
 using Dayanet.Ecommerce.Comman.Help;
+using Dayanet.Ecommerce.Domain.Entities.Ecommerce;
 using Dayanet.Ecommerce.SharedModels;
+using Dayanet.Ecommerce.SharedModels.Dtos.Product;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product.Get;
+using Dayanet.Ecommerce.SharedModels.Dtos.ProductGallery;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dayanet.Ecommerce.Application.Services.Single.Product.Query;
@@ -17,12 +20,18 @@ public class FetchProductService : IFetchProductService {
         int rowCount = 0;
         var products = _db.Products
             .Include(p => p.Category)
+            .ThenInclude(x => x.CategoryAttributes)
+            .Include(x => x.ProductAttributes)
+            .ThenInclude(x => x.AttributeValues)
+            .Include(x => x.ProductGalleries)
+            .Include(x => x.Inventory)
+
             .ToPaged(Page, PageSize, out rowCount).AsQueryable();
         if (!string.IsNullOrWhiteSpace(searchKey)) {
             products = products.Where(x => x.Name.Contains(searchKey)).AsQueryable();
         }
 
-        var productMappToDto =  products.Select(p => new ProductDto {
+        var productMappToDto = products.Select(p => new ProductDto {
             CategoryName = p.Category.Name,
             Name = p.Name,
             AllowCustomerComment = p.AllowCustomerComment,
@@ -42,7 +51,8 @@ public class FetchProductService : IFetchProductService {
             ShowCount = p.ShowCount,
             ShowOnHomepage = p.ShowOnHomepage,
             UpdateedDate = p.UpdateedDate,
-            Width = p.Width
+            Width = p.Width,
+            ProductCount = p.Inventory.ProductCount,
         }).ToList();
         return new ResultDto<ProductForAdminDto> {
             Data = new ProductForAdminDto() {

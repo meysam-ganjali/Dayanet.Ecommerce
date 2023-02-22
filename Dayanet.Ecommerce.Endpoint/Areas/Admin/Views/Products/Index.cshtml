@@ -79,9 +79,10 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
                                                 <button onclick="ShowModalAddToInventory('@p.Id')" class="dropdown-item"><i class="bx bx-archive-in"></i>&nbsp;ثبت تعداد در انبار</button>
-                                                <a href="/admin/Products/AddProductAttribute?categoryId=@p.CategoryId&productId=@p.Id" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;ثبت مشخصه</a>
+                                                <button onclick="ShowModalAddGallery('@p.Id')" class="dropdown-item"><i class="bx bx-image-add"></i>&nbsp;ایجاد گالری </button>
+                                            <a href="/admin/Products/AddProductAttribute?categoryId=@p.CategoryId&productId=@p.Id" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;ثبت مشخصه</a>
                                             <a href="/Admin/Product/UpdateProduct/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</a>
-                                            <a href="/Admin/Product/ProductDetails/@p.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;جزئیات</a>
+                                                <a href="/Admin/Products/ProductDetaile/@p.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;جزئیات</a>
                                             <button onclick="DeleteProductSweet('@p.Id','@p.Name')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
                                         </div>
                                     </div>
@@ -123,6 +124,10 @@
         function ShowModalAddToInventory(productId) {
             $('#Product_ID_inventory').val(productId);
             $('#AddToInventory').modal('show');
+        }
+        function ShowModalAddGallery(productId) {
+            $('#Product_ID_gallery').val(productId);
+            $('#AddGallery').modal('show');
         }
         function DeleteProductSweet(Id, title) {
             swal.fire({
@@ -197,6 +202,34 @@
                             <span class="input-group-text bg-light" id="basic-addon1"> شناسه محصول در انبار</span>
                             <input name="SKU" type="text" readonly class="form-control" value="@Guid.NewGuid().ToString()">
                         </div>
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="AddGallery" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title text-white">افزودن گالری محصول</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Products/AddProductGallery" enctype="multipart/form-data">
+                        <input name="ProductId" type="hidden" id="Product_ID_gallery" />
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> تصاویر محصول</span>
+                            <input name="Images" type="file" multiple class="form-control" accept="image/*">
+                        </div>
+                      
                         <div class="row justify-content-around">
                             <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>

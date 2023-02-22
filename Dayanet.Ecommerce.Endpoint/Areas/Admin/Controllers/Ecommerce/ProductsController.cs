@@ -74,14 +74,36 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.Ecommerce {
         [HttpPost]
         public async Task<IActionResult> AddProductAttribute(ProductAttributeDto attr,int categoryId)
         {
-            var res = await _productRepository.AddAttribute(attr, categoryId);
+            var res = await _productRepository.AddAttribute(attr);//Data = Product Id
             if (res.IsSuccess) {
                 TempData["success"] = res.Message;
-                return Redirect($"/Admin/Products/AddProductAttribute?categoryId={res.Data.CategoryId}&productId={res.Data.ProductId}");
+                return Redirect($"/Admin/Products/AddProductAttribute?categoryId={categoryId}&productId={res.Data}");
             }
            
             TempData["error"] = res.Message;
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddProductGallery(CreateProductGallaryDto gallaryDto)
+        {
+            var Files = HttpContext.Request.Form.Files.ToList();
+            gallaryDto.Images = Files;
+            var res = await _productRepository.AddProductGallaryAsync(gallaryDto);
+            if (res.IsSuccess) {
+                TempData["success"] = res.Message;
+                return Redirect($"/Admin/Products/Index");
+            }
+
+            TempData["error"] = res.Message;
+            return Redirect($"/Admin/Products/Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ProductDetaile(int id)
+        {
+            var res = await _productService.FetchProductById.GetByIdAsync(id);
+            return View(res.Data);
         }
     }
 }

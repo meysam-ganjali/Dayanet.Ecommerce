@@ -8,13 +8,7 @@ namespace Dayanet.Ecommerce.Application.Services.Repository.Product;
 public interface IProductRepository
 {
     Task<ResultDto> AddToInventoryAsync(CreateInventoryDto inventoryDto);
-    Task<ResultDto<ResultAddAttribute>> AddAttribute(ProductAttributeDto attributeDto,int categoryId);
+    Task<ResultDto<int>> AddAttribute(ProductAttributeDto attributeDto);//ResultDto<int> : int = Product Id
     Task<ResultDto<IEnumerable<CategoryAttributeDto>>> GetAttributeForProductCategory(int categoryId);
-
-}
-
-public class ResultAddAttribute
-{
-    public int CategoryId { get; set; }
-    public int ProductId { get; set; }
+    Task<ResultDto> AddProductGallaryAsync(CreateProductGallaryDto gallaries);
 }

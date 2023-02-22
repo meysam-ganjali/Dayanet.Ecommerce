@@ -11,6 +11,7 @@
     <Folder Include="Dtos\CategoryAttribute\" />
     <Folder Include="Dtos\Banner\" />
     <Folder Include="Dtos\Inventory\" />
+    <Folder Include="Dtos\ProductGallery\" />
     <Folder Include="Dtos\Product\Get\" />
     <Folder Include="Dtos\Role\" />
     <Folder Include="Dtos\Possition\" />

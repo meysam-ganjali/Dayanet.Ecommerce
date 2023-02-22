@@ -1,20 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using Dayanet.Ecommerce.SharedModels.Dtos.Category;
-using Dayanet.Ecommerce.SharedModels.Dtos.Inventory;
+﻿using Dayanet.Ecommerce.SharedModels.Dtos.ProductGallery;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Dayanet.Ecommerce.SharedModels.Dtos.Product.Get;
 
-public class ProductForAdminDto {
-    public int RowCount { get; set; }
-    public int CurrentPage { get; set; }
-    public int PageSize { get; set; }
-
-    public List<ProductDto> Products { get; set; }
-}
-
-public class ProductDto {
+public class ProductDetialeDto
+{
     public int Id { get; set; }
     public DateTime CreatedDate { get; set; }
+    public DateTime CreatedInventoryDate { get; set; }
+    public DateTime? UpdateInventoryDate { get; set; }
+    public DateTime? LastSellDate { get; set; }
     public DateTime? UpdateedDate { get; set; }
     public bool IsShow { get; set; }
     public string Name { get; set; }
@@ -33,12 +28,9 @@ public class ProductDto {
     public int? Height { get; set; }
     public int CategoryId { get; set; }
     public string CategoryName { get; set; }
+    public string ParentName { get; set; }
     public int ProductCount { get; set; }
-
-    //public virtual ICollection<ProductCostType> ProductCostTypes { get; set; }
-    //public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
-    //public virtual ICollection<CartItem> CartItems { get; set; }
-    //public virtual ICollection<OrderDetaile> OrderDetailes { get; set; }
-    //public virtual ICollection<Favorit> Favorits { get; set; }
-    //public virtual ICollection<Comment> Comments { get; set; }
+    public string SKU{ get; set; }
+    public List<ProductGalleryDto> Galleries { get; set; }
+    public List<productAttributeDtoForDetaile> Attributes { get; set; }
 }

@@ -29,4 +29,10 @@ public class ProductFasade : IProductFasade {
             return _fetchProduct = _fetchProduct ?? new FetchProductService(_db);
         }
     }
+    private IFetchProductByIdService _fetchProductById;
+    public IFetchProductByIdService FetchProductById {
+        get {
+            return _fetchProductById = _fetchProductById ?? new FetchProductByIdService(_db);
+        }
+    }
 }

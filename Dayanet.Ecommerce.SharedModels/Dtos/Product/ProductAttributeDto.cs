@@ -1,4 +1,6 @@
-﻿namespace Dayanet.Ecommerce.SharedModels.Dtos.Product;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Dayanet.Ecommerce.SharedModels.Dtos.Product;
 
 public class ProductAttributeDto
 {

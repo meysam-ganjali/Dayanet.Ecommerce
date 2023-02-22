@@ -21,7 +21,6 @@
     <Folder Include="Services\Single\Category\Command\" />
     <Folder Include="Services\Single\Category\Query\" />
     <Folder Include="Services\Single\Product\Command\" />
-    <Folder Include="Services\Single\Product\Query\" />
     <Folder Include="Services\Single\Slider\Command\" />
     <Folder Include="Services\Single\Slider\Query\" />
     <Folder Include="Services\Single\User\Query\" />
