@@ -78,7 +78,8 @@
                                             <span class="visually-hidden">فهرست کشویی</span>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                                            <button onclick="ShowModalAddToInventory('@p.Id')" class="dropdown-item"><i class="bx bx-archive-in"></i>&nbsp;ثبت تعداد در انبار</button>
+                                                <button onclick="ShowModalAddToInventory('@p.Id')" class="dropdown-item"><i class="bx bx-archive-in"></i>&nbsp;ثبت تعداد در انبار</button>
+                                                <a href="/admin/Products/AddProductAttribute?categoryId=@p.CategoryId&productId=@p.Id" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;ثبت مشخصه</a>
                                             <a href="/Admin/Product/UpdateProduct/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</a>
                                             <a href="/Admin/Product/ProductDetails/@p.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;جزئیات</a>
                                             <button onclick="DeleteProductSweet('@p.Id','@p.Name')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>

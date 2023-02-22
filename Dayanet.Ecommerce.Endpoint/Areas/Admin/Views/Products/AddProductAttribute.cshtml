@@ -1,0 +1,48 @@
+﻿@model Dayanet.Ecommerce.SharedModels.Dtos.Product.ProductAttributeDto?
+<partial name="_Notification" />
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">مشخصات محصول</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">افزودن مشخصات جدید</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="card">
+    <div class="card-body p-4">
+        <h5 class="card-title">افزودن محصول جدید</h5>
+        <hr>
+        <div class="form-body mt-4">
+            <form class="row" method="post" action="/Admin/Products/AddProductAttribute" enctype="multipart/form-data">
+                <input type="hidden" value="@ViewBag.ProductId" asp-for="ProductId" />
+                <input type="hidden" value="@ViewBag.CategoryId" name="categoryId" />
+                <div class="col-lg-12">
+                    <div class="border border-3 p-4 rounded">
+                        <div class="mb-3">
+                            <label class="form-label">مشخصات ثبت شده</label>
+                            <select class="form-select select2" asp-for="CategoryAttributeId" asp-items="@ViewBag.Attribute">
+                            </select>
+                            <span class="text-danger" asp-validation-for="CategoryAttributeId"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pname" class="form-label">مقدار نشخصه</label>
+                            <input asp-for="Value" type="text" class="form-control" id="inputProductTitle">
+                            <span class="text-danger" asp-validation-for="Value"></span>
+                        </div>
+                        <div class="mb-3 col-2">
+                            <label for="pname" class="form-label">اگر مشخصه رنگ است مقدار دهید</label>
+                            <input asp-for="ColorHex" type="color" class="form-control" id="inputProductTitle">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">ثبت</button>
+            </form>
+            <!--end row-->
+        </div>
+    </div>
+</div>

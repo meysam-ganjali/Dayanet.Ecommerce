@@ -3,7 +3,6 @@
 namespace Dayanet.Ecommerce.Domain.Entities.Ecommerce;
 
 public class CategoryAttribute : BaseEntity {
-    public int Id { get; set; }
     public string AttributeName { get; set; }
     public int CategoryId { get; set; }
     //Relation

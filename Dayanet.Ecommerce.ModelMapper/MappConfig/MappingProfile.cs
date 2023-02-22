@@ -6,6 +6,7 @@ using Dayanet.Ecommerce.SharedModels.Dtos.Banner;
 using Dayanet.Ecommerce.SharedModels.Dtos.Category;
 using Dayanet.Ecommerce.SharedModels.Dtos.CategoryAttribute;
 using Dayanet.Ecommerce.SharedModels.Dtos.Possition;
+using Dayanet.Ecommerce.SharedModels.Dtos.Product;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product.Create;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product.Get;
 using Dayanet.Ecommerce.SharedModels.Dtos.Role;
@@ -158,6 +159,7 @@ public class MappingProfile {
             config.CreateMap<Inventory, CreateInventoryDto>().ReverseMap();
 
             #endregion
+
         });
         return mappingConfig;
     }
