@@ -32,7 +32,6 @@
 		<Folder Include="Areas\Admin\Models\" />
 		<Folder Include="Config\" />
 		<Folder Include="Utility\" />
-		<Folder Include="wwwroot\assets\parent_category_logo\" />
 	</ItemGroup>
 
 	<ItemGroup>
