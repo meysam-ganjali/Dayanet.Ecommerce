@@ -2,6 +2,7 @@
 using Dayanet.Ecommerce.Domain.Entities.Auth;
 using Dayanet.Ecommerce.Domain.Entities.Common;
 using Dayanet.Ecommerce.Domain.Entities.Ecommerce;
+using Dayanet.Ecommerce.Domain.Entities.FinanecCost;
 using Dayanet.Ecommerce.Domain.Entities.ProductCommon;
 using Dayanet.Ecommerce.Domain.Entities.ShoopingCart;
 using Dayanet.Ecommerce.Domain.Entities.ShoppingOrder;
@@ -31,16 +32,28 @@ public class DataBaseContext : DbContext, IDataBaseContext {
     public DbSet<Cart> Carts { get; set; }
     public DbSet<CartItem> CartItems { get; set; }
     public DbSet<Finance> Finances { get; set; }
-    public DbSet<Cost> Costs { get; set; }
-    public DbSet<ProductCostType> ProductCostTypes { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetaile> OrderDetailes { get; set; }
+    public DbSet<CostType> CostTypes { get; set; }
+    public DbSet<Cost> Costs { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         modelBuilder.Entity<User>().HasIndex(x => x.CellPhone).IsUnique();
         modelBuilder.Entity<User>().HasIndex(x => x.Email).IsUnique();
         foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(s => s.GetForeignKeys())) {
             relationship.DeleteBehavior = DeleteBehavior.Restrict;
         }
+
+        modelBuilder.Entity<CostType>().HasData(new List<CostType>
+        {
+            new CostType(){Id=1, Name = "مالیات"},
+            new CostType(){Id=2, Name = "هزینه پست"},
+        });
+        modelBuilder.Entity<Cost>().HasData(new List<Cost>
+        {
+            new Cost(){Id=1,Amount = 9,CostTypeId = 1},
+            new Cost(){Id=2,Amount = 1500,CostTypeId = 2},
+        });
         base.OnModelCreating(modelBuilder);
     }
 }

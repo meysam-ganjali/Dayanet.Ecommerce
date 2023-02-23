@@ -81,9 +81,7 @@
                                                 <button onclick="ShowModalAddToInventory('@p.Id')" class="dropdown-item"><i class="bx bx-archive-in"></i>&nbsp;ثبت تعداد در انبار</button>
                                                 <button onclick="ShowModalAddGallery('@p.Id')" class="dropdown-item"><i class="bx bx-image-add"></i>&nbsp;ایجاد گالری </button>
                                             <a href="/admin/Products/AddProductAttribute?categoryId=@p.CategoryId&productId=@p.Id" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;ثبت مشخصه</a>
-                                            <a href="/Admin/Product/UpdateProduct/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;ویرایش</a>
                                                 <a href="/Admin/Products/ProductDetaile/@p.Id" class="dropdown-item"><i class="bx bx-show"></i>&nbsp;جزئیات</a>
-                                            <button onclick="DeleteProductSweet('@p.Id','@p.Name')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف</button>
                                         </div>
                                     </div>
                                 </td>
@@ -118,8 +116,8 @@
 </div>
 @section Scripts
     {
-    <link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
-    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>
+    @*<link rel="stylesheet" href="~/lib/Sweetalert2/sweetalert2.min.css" />
+    <script src="~/lib/Sweetalert2/sweetalert2.min.js"></script>*@
     <script>
         function ShowModalAddToInventory(productId) {
             $('#Product_ID_inventory').val(productId);
@@ -129,55 +127,7 @@
             $('#Product_ID_gallery').val(productId);
             $('#AddGallery').modal('show');
         }
-        function DeleteProductSweet(Id, title) {
-            swal.fire({
-                title: 'حذف  ' + ' ( ' + title + ' )',
-                text: "کاربر گرامی  مطمئن هستید؟",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#7cacbe',
-                confirmButtonText: 'بله ',
-                cancelButtonText: 'خیر'
-            }).then((result) => {
-                if (result.value) {
-                    var postData = {
-                        'id': Id
-                    };
-                    $.ajax({
-                        contentType: 'application/x-www-form-urlencoded',
-                        dataType: 'json',
-                        type: "POST",
-                        url: "/Admin/Products/RemoveProduct/",
-                        data: postData,
-                        success: function (data) {
-                            if (data.isSuccess == true) {
-                                swal.fire(
-                                    'موفق!',
-                                    data.message,
-                                    'success'
-                                ).then(function (isConfirm) {
-                                    location.reload();
-                                });
-                            } else {
-
-                                swal.fire(
-                                    'هشدار!',
-                                    data.message,
-                                    'warning'
-                                );
-
-                            }
-                        },
-                        error: function (request, status, error) {
-                            alert(request.responseText);
-                        }
-
-                    });
-
-                }
-            });
-        }
+       
     </script>
 }
 @section Modals

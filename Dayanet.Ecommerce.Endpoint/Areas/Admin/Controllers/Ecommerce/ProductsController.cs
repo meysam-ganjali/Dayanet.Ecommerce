@@ -105,5 +105,25 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.Ecommerce {
             var res = await _productService.FetchProductById.GetByIdAsync(id);
             return View(res.Data);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveProductPicture(int id)
+        {
+            var result = await _productRepository.RemoveFromGallery(id);
+            return Json(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddProductGalleryInDetaile(CreateProductGallaryDto gallaryDto) {
+            var Files = HttpContext.Request.Form.Files.ToList();
+            gallaryDto.Images = Files;
+            var res = await _productRepository.AddProductGallaryAsync(gallaryDto);
+            if (res.IsSuccess) {
+                TempData["success"] = res.Message;
+                return Redirect($"/Admin/Products/ProductDetaile/{gallaryDto.ProductId}");
+            }
+
+            TempData["error"] = res.Message;
+            return Redirect($"/Admin/Products/ProductDetaile/{gallaryDto.ProductId}");
+        }
     }
 }

@@ -94,7 +94,7 @@ public class ProductRepository : IProductRepository {
     public async Task<ResultDto> AddProductGallaryAsync(CreateProductGallaryDto gallary) {
 
         UploadHelper uploadObj = new UploadHelper(_environment);
-        List<ProductGallery> galleryLst=new List<ProductGallery>();
+        List<ProductGallery> galleryLst = new List<ProductGallery>();
         foreach (var gallerys in gallary.Images) {
             var uploadedResult = uploadObj.UploadFile(gallerys, $@"assets\images\products\gallery\");
             galleryLst.Add(new ProductGallery() {
@@ -105,8 +105,7 @@ public class ProductRepository : IProductRepository {
             });
         }
 
-        try
-        {
+        try {
             await _db.ProductGalleries.AddRangeAsync(galleryLst);
             await _db.SaveChangesAsync();
             return new ResultDto {
@@ -120,5 +119,28 @@ public class ProductRepository : IProductRepository {
             };
         }
 
+    }
+
+    public async Task<ResultDto> RemoveFromGallery(int gallaryId) {
+        var gallery = await _db.ProductGalleries
+            .Include(x => x.Product)
+            .FirstOrDefaultAsync(x => x.Id == gallaryId);
+        if (gallery == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "گالری یافت نشد"
+            };
+        }
+
+        string webRootPath = _environment.WebRootPath;
+        var oldImagePath = Path.Combine(webRootPath, gallery.ImagePath.TrimStart('\\'));
+        DeleteFile.DeleteFileFromRoot(oldImagePath);
+        _db.ProductGalleries.Remove(gallery);
+        await _db.SaveChangesAsync();
+        return new ResultDto
+        {
+            IsSuccess = true,
+            Message = $"تصویر از گالری محصول {gallery.Product.Name} حذف گردید"
+        };
     }
 }

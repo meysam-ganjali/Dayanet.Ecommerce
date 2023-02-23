@@ -26,7 +26,6 @@ public class Product : BaseEntity {
     [ForeignKey("CategoryId")] public virtual Category Category { get; set; }
 
     public virtual Inventory Inventory { get; set; }
-    public virtual ICollection<ProductCostType> ProductCostTypes { get; set; }
     public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
     public virtual ICollection<ProductGallery> ProductGalleries { get; set; }
     public virtual ICollection<CartItem> CartItems { get; set; }

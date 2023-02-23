@@ -1,6 +1,7 @@
 ﻿using Dayanet.Ecommerce.Domain.Entities.Auth;
 using Dayanet.Ecommerce.Domain.Entities.Common;
 using Dayanet.Ecommerce.Domain.Entities.Ecommerce;
+using Dayanet.Ecommerce.Domain.Entities.FinanecCost;
 using Dayanet.Ecommerce.Domain.Entities.ProductCommon;
 using Dayanet.Ecommerce.Domain.Entities.ShoopingCart;
 using Dayanet.Ecommerce.Domain.Entities.ShoppingOrder;
@@ -33,10 +34,10 @@ public interface IDataBaseContext {
     DbSet<CartItem> CartItems { get; set; }
     //Shopping Order
     DbSet<Finance> Finances { get; set; }
-    DbSet<Cost> Costs { get; set; }
-    DbSet<ProductCostType> ProductCostTypes { get; set; }
     DbSet<Order> Orders { get; set; }
     DbSet<OrderDetaile> OrderDetailes { get; set; }
+    DbSet<CostType> CostTypes { get; set; }
+    DbSet<Cost> Costs { get; set; }
 
 
 
