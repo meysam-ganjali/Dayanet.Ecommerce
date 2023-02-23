@@ -13,4 +13,5 @@ public interface IProductRepository
     Task<ResultDto> AddProductGallaryAsync(CreateProductGallaryDto gallaries);
     Task<ResultDto> RemoveFromGallery(int gallaryId);
     Task<ResultDto> RemoveFromProductAttribute(int productAttrId);
+    Task<ResultDto> UpdateProductAttribute(int productAttrId,string attrValue, string? colorHex);
 }

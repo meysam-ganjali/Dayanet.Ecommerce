@@ -4,13 +4,9 @@ using Dayanet.Ecommerce.Domain.Entities.Ecommerce;
 using Dayanet.Ecommerce.SharedModels;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product.Create;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 using Dayanet.Ecommerce.SharedModels.Dtos.CategoryAttribute;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product;
 using Dayanet.Ecommerce.Comman.FileTools;
-using Dayanet.Ecommerce.Domain.Entities.Common;
-using Dayanet.Ecommerce.SharedModels.Dtos.Slider;
-using System;
 using Microsoft.AspNetCore.Hosting;
 
 namespace Dayanet.Ecommerce.Application.Services.Repository.Product;
@@ -19,6 +15,7 @@ public class ProductRepository : IProductRepository {
     private readonly IDataBaseContext _db;
     private IMapper _mapper;
     private IHostingEnvironment _environment;
+    private IProductRepository _productRepositoryImplementation;
 
     public ProductRepository(IDataBaseContext db, IMapper mapper, IHostingEnvironment environment) {
         _db = db;
@@ -146,33 +143,60 @@ public class ProductRepository : IProductRepository {
     public async Task<ResultDto> RemoveFromProductAttribute(int productAttrId) {
         var productAttrbiute = await _db.ProductAttributes
             .Include(x => x.AttributeValues)
-            .Include(x=>x.CategoryAttribute)
-            .Include(x=>x.Product)
+            .Include(x => x.CategoryAttribute)
+            .Include(x => x.Product)
             .FirstOrDefaultAsync(x => x.Id == productAttrId);
-        if (productAttrbiute == null)
-        {
-            return new ResultDto
-            {
+        if (productAttrbiute == null) {
+            return new ResultDto {
                 IsSuccess = false,
                 Message = "مشخصه با این عنوان یافت نشد"
             };
         }
 
-        if (productAttrbiute.AttributeValues.Count > 0)
-        {
-            foreach (var item in productAttrbiute.AttributeValues)
-            {
+        if (productAttrbiute.AttributeValues.Count > 0) {
+            foreach (var item in productAttrbiute.AttributeValues) {
                 _db.AttributeValues.Remove(item);
             }
         }
 
         _db.ProductAttributes.Remove(productAttrbiute);
         await _db.SaveChangesAsync();
-        return new ResultDto
-        {
+        return new ResultDto {
             IsSuccess = true,
             Message =
                 $"مشخصه {productAttrbiute.CategoryAttribute.AttributeName} از لیست مشخصات محصول {productAttrbiute.Product.Name} هذف گردید"
+        };
+    }
+
+    public async Task<ResultDto> UpdateProductAttribute(int productAttrId, string attrValue,string? colorHex) {
+        var productAttrbiute = await _db.ProductAttributes
+            .Include(x => x.AttributeValues)
+            .Include(x => x.Product)
+            .Include(x => x.CategoryAttribute)
+            .FirstOrDefaultAsync(x => x.Id == productAttrId);
+        if (productAttrbiute == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "مشخصه با این عنوان یافت نشد"
+            };
+        }
+
+        var attributeValue = _db.AttributeValues.FirstOrDefault(x => x.ProductAttributeId == productAttrId);
+        if (attributeValue == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "مشخصه با این عنوان یافت نشد"
+            };
+        }
+
+        attributeValue.Value = attrValue;
+        attributeValue.ColorHex = colorHex;
+        productAttrbiute.UpdateedDate = DateTime.Now;
+        await _db.SaveChangesAsync();
+        return new ResultDto
+        {
+            IsSuccess = true,
+            Message = $"مشخصه {productAttrbiute.CategoryAttribute.AttributeName} بروز شد"
         };
     }
 }

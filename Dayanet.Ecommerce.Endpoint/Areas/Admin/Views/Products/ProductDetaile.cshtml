@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "جزئیات محصول";
 }
-
+<partial name="_Notification" />
 <!--breadcrumb-->
 <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
     <div class="breadcrumb-title pe-3">@ViewData["Title"]</div>
@@ -149,12 +149,26 @@
                                                             <tr>
                                                                 <td>@attr.CategoryAttributeName</td>
                                                                 <td>
-                                                                    @foreach (var val in attr.AttributeValues) {
-                                                                        <span class="text-secondary">@val.Value</span>
-                                                                    }
+                                                                    <ul class="d-flex justify-content-around " style="list-style: none;">
+                                                                        @foreach (var val in attr.AttributeValues) {
+                                                                            <li class="text-secondary">@val.Value</li>
+                                                                            <li>
+                                                                                <button onclick="UpdateAttribute('@attr.Id','@Model.Id','@attr.CategoryAttributeName','@val.Value','@val.ColorHex')" class="btn btn-primary">
+                                                                                    <i class="bx bx-edit"></i>
+                                                                                </button>
+                                                                            </li>
+                                                                            @if (@val.ColorHex == "#000000") {
+                                                                                <li>فاقد رنگ</li>
+                                                                            } else {
+                                                                                <li style="width: 25px; height: 25px; border-radius: 50%;background-color: @val.ColorHex">رنگ</li>
+                                                                            }
+
+                                                                        }
+                                                                    </ul>
                                                                 </td>
+
                                                                 <td>
-                                                                    <button class="btn btn-primary"><i class="bx bx-edit"></i></button>
+
                                                                     <button onclick="RemoveAttribute('@attr.Id')" class="btn btn-danger"><i class="bx bx-trash"></i></button>
                                                                 </td>
                                                             </tr>
@@ -314,10 +328,19 @@
                 }
             });
         }
+
+        function UpdateAttribute(id, Pid, attrName, attrVal, attrColor) {
+            $('#prouctAttr_Id_InDetaile').val(id);
+            $('#PID_AttrInDetaile').val(Pid);
+            $('#attr_Name_forEdit').val(attrName);
+            $('#attr_Val_forEdit').val(attrVal);
+            $('#attr_Color_forEdit').val(attrColor);
+            $('#UpdateProductAttribute').modal('show');
+        }
     </script>
 }
 @section Modals
-{
+    {
     <div class="modal" id="AddGalleryInDetailes" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -334,7 +357,43 @@
                             <span class="input-group-text bg-light" id="basic-addon1"> تصاویر محصول</span>
                             <input name="Images" type="file" multiple class="form-control" accept="image/*">
                         </div>
-                      
+
+                        <div class="row justify-content-around">
+                            <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="UpdateProductAttribute" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title text-white">افزودن گالری محصول</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/Admin/Products/UpdateProductAttribute">
+                        <input name="id" type="hidden" id="prouctAttr_Id_InDetaile" />
+                        <input name="pId" type="hidden" id="PID_AttrInDetaile" />
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> عنوان مشخصه</span>
+                            <input type="text" id="attr_Name_forEdit" class="form-control" readonly>
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> مقدار مشخصه</span>
+                            <input name="Attrvalue" type="text" id="attr_Val_forEdit" class="form-control">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-light" id="basic-addon1"> اگر مشخصه رنگ است مقدار دهید</span>
+                            <input name="colorHex" type="color" id="attr_Color_forEdit" class="form-control-color">
+                        </div>
                         <div class="row justify-content-around">
                             <button type="submit" class="btn btn-success "><i class="fa fa-check"></i>&nbsp;ثبت </button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-arrow-left"></i>&nbsp;برگشت</button>

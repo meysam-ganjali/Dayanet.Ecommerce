@@ -126,5 +126,18 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.Ecommerce {
             var result = await _productRepository.RemoveFromProductAttribute(id);
             return Json(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProductAttribute(int id, string Attrvalue,int pId, string? colorHex)
+        {
+            var res = await _productRepository.UpdateProductAttribute(id, Attrvalue, colorHex);
+            if (res.IsSuccess) {
+                TempData["success"] = res.Message;
+                return Redirect($"/Admin/Products/ProductDetaile/{pId}");
+            }
+
+            TempData["error"] = res.Message;
+            return Redirect($"/Admin/Products/ProductDetaile/{pId}");
+        }
     }
 }
