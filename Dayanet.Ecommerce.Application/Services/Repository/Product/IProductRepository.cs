@@ -12,4 +12,5 @@ public interface IProductRepository
     Task<ResultDto<IEnumerable<CategoryAttributeDto>>> GetAttributeForProductCategory(int categoryId);
     Task<ResultDto> AddProductGallaryAsync(CreateProductGallaryDto gallaries);
     Task<ResultDto> RemoveFromGallery(int gallaryId);
+    Task<ResultDto> RemoveFromProductAttribute(int productAttrId);
 }

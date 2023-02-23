@@ -137,10 +137,42 @@ public class ProductRepository : IProductRepository {
         DeleteFile.DeleteFileFromRoot(oldImagePath);
         _db.ProductGalleries.Remove(gallery);
         await _db.SaveChangesAsync();
+        return new ResultDto {
+            IsSuccess = true,
+            Message = $"تصویر از گالری محصول {gallery.Product.Name} حذف گردید"
+        };
+    }
+
+    public async Task<ResultDto> RemoveFromProductAttribute(int productAttrId) {
+        var productAttrbiute = await _db.ProductAttributes
+            .Include(x => x.AttributeValues)
+            .Include(x=>x.CategoryAttribute)
+            .Include(x=>x.Product)
+            .FirstOrDefaultAsync(x => x.Id == productAttrId);
+        if (productAttrbiute == null)
+        {
+            return new ResultDto
+            {
+                IsSuccess = false,
+                Message = "مشخصه با این عنوان یافت نشد"
+            };
+        }
+
+        if (productAttrbiute.AttributeValues.Count > 0)
+        {
+            foreach (var item in productAttrbiute.AttributeValues)
+            {
+                _db.AttributeValues.Remove(item);
+            }
+        }
+
+        _db.ProductAttributes.Remove(productAttrbiute);
+        await _db.SaveChangesAsync();
         return new ResultDto
         {
             IsSuccess = true,
-            Message = $"تصویر از گالری محصول {gallery.Product.Name} حذف گردید"
+            Message =
+                $"مشخصه {productAttrbiute.CategoryAttribute.AttributeName} از لیست مشخصات محصول {productAttrbiute.Product.Name} هذف گردید"
         };
     }
 }

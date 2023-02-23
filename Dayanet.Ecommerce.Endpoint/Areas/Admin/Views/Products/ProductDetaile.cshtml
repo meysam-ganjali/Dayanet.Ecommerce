@@ -155,7 +155,7 @@
                                                                 </td>
                                                                 <td>
                                                                     <button class="btn btn-primary"><i class="bx bx-edit"></i></button>
-                                                                    <button class="btn btn-danger"><i class="bx bx-trash"></i></button>
+                                                                    <button onclick="RemoveAttribute('@attr.Id')" class="btn btn-danger"><i class="bx bx-trash"></i></button>
                                                                 </td>
                                                             </tr>
                                                         }
@@ -265,7 +265,55 @@
             $('#PID_galleryInDetaile').val(productId);
             $('#AddGalleryInDetailes').modal('show');
         }
+        function RemoveAttribute(Id) {
+            swal.fire({
+                title: 'حذف مشخصه از  مشخصات محصول محصول',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/RemoveProductAttribute/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
 
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
     </script>
 }
 @section Modals
