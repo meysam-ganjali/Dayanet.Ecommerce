@@ -1,0 +1,92 @@
+﻿@model Dayanet.Ecommerce.SharedModels.Dtos.User.CreateUserDto
+@{
+    ViewData["Title"] = "ثبت کاربر جدید";
+}
+<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+    <div class="breadcrumb-title pe-3">کاربران</div>
+    <div class="ps-3">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0 p-0">
+                <li class="breadcrumb-item">
+                    <a href="/admin/Index"><i class="bx bx-home-alt"></i></a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"] </li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="/admin/Users/CreateUser">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">نام و نام خانوداگی</span>
+                        <input type="text" asp-for="FullName" class="form-control">
+                        <span class="text-danger" asp-validation-for="FullName"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">آدرس ایمیل</span>
+                        <input type="email" asp-for="Email" class="form-control" placeholder="آدرس ایمیل">
+                        <span class="text-danger" asp-validation-for="Email"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">شماره تلفن همراه</span>
+                        <input type="text" asp-for="CellPhone" class="form-control" placeholder="شماره تلفن همراه">
+                        <span class="text-danger" asp-validation-for="CellPhone"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">کلمه عبور</span>
+                        <input type="password" asp-for="PasswordHash" class="form-control">
+                        <span class="text-danger" asp-validation-for="PasswordHash"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">تکرار کلمه عبور</span>
+                        <input type="password" asp-for="ConfirmPassword" class="form-control">
+                        <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">تائید شماره تلفن</span>
+                        <select class="form-select" asp-for="PhoneNumberConfirmed">
+                            <option value="false">تائید نشود</option>
+                            <option value="true">تائید شود</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="PhoneNumberConfirmed"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">تائید ایمیل </span>
+                        <select class="form-select" asp-for="EmailConfirmed">
+                            <option value="false">تائید نشود</option>
+                            <option value="true">تائید شود</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="EmailConfirmed"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">نوع قفل </span>
+                        <select class="form-select" asp-for="LockoutEnabled">
+                            <option value="false">قفل نباشد </option>
+                            <option value="true">قفل شود</option>
+                        </select>
+                        <span class="text-danger" asp-validation-for="LockoutEnabled"></span>
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">نقش کاربر</span>
+                        <select class="form-select" asp-for="RoleId" asp-items="@ViewBag.Role">
+                        </select>
+                        <span class="text-danger" asp-validation-for="RoleId"></span>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-success"><i class="bx bx-check"></i>&nbsp;ثبت</button>
+                            <a href="/Admin/Users/Index" class="btn btn-secondary"><i class="bx bx-arrow-back"></i>&nbsp;انطراف</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+    <partial name="_ValidationScriptsPartial" />
+}

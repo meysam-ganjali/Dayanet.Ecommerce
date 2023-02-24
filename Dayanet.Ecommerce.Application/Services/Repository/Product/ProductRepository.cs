@@ -8,6 +8,7 @@ using Dayanet.Ecommerce.SharedModels.Dtos.CategoryAttribute;
 using Dayanet.Ecommerce.SharedModels.Dtos.Product;
 using Dayanet.Ecommerce.Comman.FileTools;
 using Microsoft.AspNetCore.Hosting;
+using Dayanet.Ecommerce.Domain.Entities.Auth;
 
 namespace Dayanet.Ecommerce.Application.Services.Repository.Product;
 
@@ -167,8 +168,7 @@ public class ProductRepository : IProductRepository {
                 $"مشخصه {productAttrbiute.CategoryAttribute.AttributeName} از لیست مشخصات محصول {productAttrbiute.Product.Name} هذف گردید"
         };
     }
-
-    public async Task<ResultDto> UpdateProductAttribute(int productAttrId, string attrValue,string? colorHex) {
+    public async Task<ResultDto> UpdateProductAttribute(int productAttrId, string attrValue, string? colorHex) {
         var productAttrbiute = await _db.ProductAttributes
             .Include(x => x.AttributeValues)
             .Include(x => x.Product)
@@ -193,10 +193,81 @@ public class ProductRepository : IProductRepository {
         attributeValue.ColorHex = colorHex;
         productAttrbiute.UpdateedDate = DateTime.Now;
         await _db.SaveChangesAsync();
-        return new ResultDto
-        {
+        return new ResultDto {
             IsSuccess = true,
             Message = $"مشخصه {productAttrbiute.CategoryAttribute.AttributeName} بروز شد"
+        };
+    }
+
+    public async Task<ResultDto> ActivDeActivComment(int pId) {
+        var product = await _db.Products.FindAsync(pId);
+        if (product == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "محصول یافت نشد"
+            };
+        }
+
+        product.AllowCustomerComment = !product.AllowCustomerComment;
+        await _db.SaveChangesAsync();
+        string state = product.AllowCustomerComment == true ? "باز کردن نظر" : " بستن نظر";
+        return new ResultDto() {
+            IsSuccess = true,
+            Message = $"نظرات محصول {state} شد",
+        };
+    }
+
+    public async Task<ResultDto> ActivDeActivIsShow(int pId) {
+        var product = await _db.Products.FindAsync(pId);
+        if (product == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "محصول یافت نشد"
+            };
+        }
+
+        product.IsShow = !product.IsShow;
+        await _db.SaveChangesAsync();
+        string state = product.IsShow == true ? "آشکار" : " مخفی";
+        return new ResultDto() {
+            IsSuccess = true,
+            Message = $"نوع نمایش محصول {state} شد",
+        };
+    }
+
+    public async Task<ResultDto> ActivDeActivShowInHomePage(int pId) {
+        var product = await _db.Products.FindAsync(pId);
+        if (product == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "محصول یافت نشد"
+            };
+        }
+
+        product.ShowOnHomepage = !product.ShowOnHomepage;
+        await _db.SaveChangesAsync();
+        string state = product.ShowOnHomepage == true ? "در صفحه خانه" : " مخفی کردن محصول در صفحه خانه";
+        return new ResultDto() {
+            IsSuccess = true,
+            Message = $" نمایش محصول {state} فعال شد",
+        };
+    }
+
+    public async Task<ResultDto> ActivDeActivIsSotial(int pId) {
+        var product = await _db.Products.FindAsync(pId);
+        if (product == null) {
+            return new ResultDto {
+                IsSuccess = false,
+                Message = "محصول یافت نشد"
+            };
+        }
+
+        product.IsSotialProduct = !product.IsSotialProduct;
+        await _db.SaveChangesAsync();
+        string state = product.IsSotialProduct == true ? "محصول ویژه شد" : " نوع محصول از ویژه به معمولی تغییر کرد";
+        return new ResultDto() {
+            IsSuccess = true,
+            Message = state,
         };
     }
 }

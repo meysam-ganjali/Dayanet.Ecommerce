@@ -1,5 +1,5 @@
-﻿@model IEnumerable<Dayanet.Ecommerce.SharedModels.Dtos.User.UserDto>
-
+﻿@addTagHelper *, LazZiya.TagHelpers
+@model Dayanet.Ecommerce.SharedModels.Dtos.User.UserForAdmin
 @{
     ViewData["Title"] = "لیست کاربران";
 }
@@ -32,91 +32,114 @@
                 <h6 class="mb-0 text-uppercase text-right">کاربران فروشگاه</h6>
             </div>
             <div class="col-md-6 col-sm-12 d-flex justify-content-end">
-                <a href="/Admin/Product/CreateProduct" class="btn btn-success text-left"><i class="bx bx-plus"></i>&nbsp;&nbsp;ثبت محصول جدید</a>
+                <a href="/Admin/Users/CreateUser" class="btn btn-success text-left"><i class="bx bx-plus"></i>&nbsp;&nbsp;ثبت کاربر</a>
             </div>
         </div>
         <hr>
+        <div class="ms-auto mb-2">
+            <div class="col">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary">فیلتر کاربران</button>
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">فهرست کشویی</span>
+                    </button>
+                    <ul class="dropdown-menu" style="">
+                        <li>
+                            <a class="dropdown-item" href="/Admin/Users/Index?filterUser=Lock-users">کاربران قفل شده</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/Admin/Users/Index?filterUser=deactive-users">کاربران غیر فعال</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/Admin/Users/Index?filterUser=confirm-email">ایمیل تائید نشده</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/Admin/Users/Index?filterUser=confirm-phone">موبایل تائید نشده</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/Admin/Users/Index">لغو فیلتر</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <table class="table mb-0 table-striped">
                     <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">نام</th>
-                            <th scope="col">نقش</th>
-                            <th scope="col">تاریخ ثبت نام</th>
-                            <th scope="col"><i class="bx bx-lock"></i></th>
-                            <th scope="col">عملیات</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">نام</th>
+                        <th scope="col">نقش</th>
+                        <th scope="col">تاریخ ثبت نام</th>
+                        <th scope="col"><i class="bx bx-lock"></i></th>
+                        <th scope="col">عملیات</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @if (Model.ToList().Count < 1) {
-                            <tr class="alert alert-danger">
-                                <td colspan="8" class="text-center">کاربری برای نمایش یافت نشد ابتدا یک کاربر ثبت کنید!</td>
-                            </tr>
-                        } else {
-                            foreach (var p in Model) {
-                                <tr>
-                                    <td>@p.Id</td>
-                                    <td>@p.FullName</td>
-                                    <td><i class="badge bg-success">@p.Role.Name</i></td>
-                                    <td>@p.CreatedDate</td>
-                                    <td>@(p.IsActive ? "فعال" : "غیر فعال")</td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary">عملیات مجاز</button>
-                                            <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
-                                                <span class="visually-hidden">فهرست کشویی</span>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
-                                                <button onclick="UpdateUser('@p.Id','@p.FullName','@p.Email','@p.CellPhone')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;بروز رسانی </button>
-                                                @if (p.LockoutEnabled == true) {
-                                                    <button onclick="LockUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-lock-open"></i>&nbsp;بازکردن قفل</button>
-                                                } else {
-                                                    <button onclick="LockUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-lock"></i>&nbsp; قفل</button>
-                                                }
-                                                @if (p.IsActive) {
-                                                    <button onclick="ActiveUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-shield-x"></i>&nbsp;غیر فعال</button>
-                                                } else {
-                                                    <button onclick="ActiveUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-check-shield"></i>&nbsp; فعال</button>
-                                                }
-                                                <button onclick="DeleteUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف </button>
-                                                <button onclick="Createddress('@p.Id')" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;آدرس جدید </button>
-                                                <button onclick="ChangeUserRole('@p.Id')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;تغییر نقش </button>
-                                                <a href="/Admin/Users/Detaile/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;جزئیات </a>
-
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <nav>
-                                    <ul class="pagination">
-                                        <li class="disabled p-2 border border-1">
-                                            <a aria-label="Previous" href="#"><span aria-hidden="true"><i class="bx bx-arrow-to-right"></i></span></a>
-                                        </li>
-                                        @for (int i = 1; i <= (ViewBag.PageCount + 1); i++) {
-                                            <li class="p-2 border border-1 @(((int)ViewBag.PageID == i) ? "active btn-primary" : "")">
-                                                <a href="/Admin/Users/Index?pageIndex=@i">@i</a>
-                                            </li>
-                                        }
-
-                                        <li class="p-2 border border-1">
-                                            <a aria-label="Next" href="#">
-                                                <span aria-hidden="true"><i class="bx bx-arrow-to-left"></i></span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </td>
+                    @if (Model.UserDtos.Count < 1) {
+                        <tr class="alert alert-danger">
+                            <td colspan="8" class="text-center">کاربری برای نمایش یافت نشد ابتدا یک کاربر ثبت کنید!</td>
                         </tr>
-                    </tfoot>
+                    } else {
+                        foreach (var p in Model.UserDtos) {
+                            <tr>
+                                <td>@p.Id</td>
+                                <td>@p.FullName</td>
+                                <td><i class="badge bg-success">@p.Role.Name</i></td>
+                                <td>@p.CreatedDate</td>
+                                <td>@(p.IsActive ? "فعال" : "غیر فعال")</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-primary">عملیات مجاز</button>
+                                        <button type="button" class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">
+                                            <span class="visually-hidden">فهرست کشویی</span>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end">
+                                            <button onclick="UpdateUser('@p.Id','@p.FullName','@p.Email','@p.CellPhone')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;بروز رسانی </button>
+                                            @if (p.LockoutEnabled == true) {
+                                                <button onclick="LockUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-lock-open"></i>&nbsp;بازکردن قفل</button>
+                                            } else {
+                                                <button onclick="LockUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-lock"></i>&nbsp; قفل</button>
+                                            }
+                                            @if (p.IsActive) {
+                                                <button onclick="ActiveUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-shield-x"></i>&nbsp;غیر فعال</button>
+                                            } else {
+                                                <button onclick="ActiveUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-check-shield"></i>&nbsp; فعال</button>
+                                            }
+                                            <button onclick="DeleteUser('@p.Id','@p.FullName')" class="dropdown-item"><i class="bx bx-trash"></i>&nbsp;حذف </button>
+                                            <button onclick="Createddress('@p.Id')" class="dropdown-item"><i class="bx bx-plus"></i>&nbsp;آدرس جدید </button>
+                                            <button onclick="ChangeUserRole('@p.Id')" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;تغییر نقش </button>
+                                            <a href="/Admin/Users/Detaile/@p.Id" class="dropdown-item"><i class="bx bx-edit"></i>&nbsp;جزئیات </a>
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+
                 </table>
+                <div class="row mt-3">
+                    <div class="col-12  text-center">
+                        <paging  total-records="@Model.RowCount"
+                                 page-no="@Model.CurrentPage"
+                                 page-size="@Model.PageSize"
+                                 show-prev-next="true"
+                                 show-total-pages="false"
+                                 show-total-records="false"
+                                 show-page-size-nav="true"
+                                 show-first-numbered-page="true"
+                                 show-last-numbered-page="true"
+                                 query-string-key-page-no="Page"
+                                 query-string-key-page-size="PageSize"
+                                 sr-text-next="بعدی"
+                                 sr-text-previous="قبلی"
+                                 gap-size="2">
+                        </paging>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

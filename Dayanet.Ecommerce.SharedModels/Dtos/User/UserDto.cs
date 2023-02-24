@@ -18,7 +18,6 @@ public class UserDto {
     public RoleDto Role { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedDate { get; set; }
-    public long? TotalRow { get; set; }
     public List<UserAddressDto> UserAddresses { get; set; }
     //public virtual ICollection<Cart> Carts { get; set; }
     //public virtual ICollection<Order> Orders { get; set; }

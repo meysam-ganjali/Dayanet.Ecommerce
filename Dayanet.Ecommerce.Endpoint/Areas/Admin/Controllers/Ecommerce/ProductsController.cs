@@ -128,8 +128,7 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.Ecommerce {
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateProductAttribute(int id, string Attrvalue,int pId, string? colorHex)
-        {
+        public async Task<IActionResult> UpdateProductAttribute(int id, string Attrvalue, int pId, string? colorHex) {
             var res = await _productRepository.UpdateProductAttribute(id, Attrvalue, colorHex);
             if (res.IsSuccess) {
                 TempData["success"] = res.Message;
@@ -138,6 +137,27 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.Ecommerce {
 
             TempData["error"] = res.Message;
             return Redirect($"/Admin/Products/ProductDetaile/{pId}");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AllowCommentCheck(int id) {
+            var res = await _productRepository.ActivDeActivComment(id);
+            return Json(res);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AllowIsShowCheck(int id) {
+            var res = await _productRepository.ActivDeActivIsShow(id);
+            return Json(res);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AllowSHowHomePagetCheck(int id) {
+            var res = await _productRepository.ActivDeActivShowInHomePage(id);
+            return Json(res);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AllowIsSotialCheck(int id) {
+            var res = await _productRepository.ActivDeActivIsSotial(id);
+            return Json(res);
         }
     }
 }

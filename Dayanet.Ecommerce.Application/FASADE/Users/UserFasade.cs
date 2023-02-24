@@ -56,4 +56,10 @@ public class UserFasade : IUserFasade {
             return _updateUserService = _updateUserService ?? new UpdateUserService(_db);
         }
     }
+    private ICreateUserAdminService _createUserAdminService;
+    public ICreateUserAdminService CreateUserAdminService {
+        get {
+            return _createUserAdminService = _createUserAdminService ?? new CreateUserAdminService(_db, _mapper);
+        }
+    }
 }

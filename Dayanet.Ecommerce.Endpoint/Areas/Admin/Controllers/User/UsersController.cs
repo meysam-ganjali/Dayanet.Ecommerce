@@ -19,16 +19,12 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.User {
             _activityService = activityService;
             _roleRepository = roleRepository;
         }
-        public async Task<IActionResult> Index(string? filter, int pageIndex = 1, int pageSize = 1) {
-            var result = await _userService.FetchUsersService.GetAllAsync(filter, pageSize, pageIndex);
-
-            long Count = result.Data.FirstOrDefault().TotalRow.Value;
-            ViewBag.PageID = pageIndex;
-            ViewBag.PageCount = pageSize;
+        public async Task<IActionResult> Index(string? filter, string? filterUser, int page = 1, int pageSize = 100)
+        {
+            var result =  _userService.FetchUsersService.GetAllAsync(filterUser, filter, pageSize, page);
             var roles = await _roleRepository.GetAllAsync();
             ViewBag.Role = new SelectList(roles.Data, "Id", "Name");
-            var model = result.Data;
-            return View(model);
+            return View(result.Data);
         }
 
         [HttpGet]
@@ -78,6 +74,24 @@ namespace Dayanet.Ecommerce.Endpoint.Areas.Admin.Controllers.User {
         [HttpPost]
         public async Task<IActionResult> Update(UpdateUserDto updateUserDto) {
             var result = await _userService.UpdateUserService.UpdateAsync(updateUserDto);
+            if (result.IsSuccess) {
+                TempData["success"] = result.Message;
+                return Redirect("/Admin/Users/Index");
+            }
+
+            TempData["error"] = result.Message;
+            return Redirect("/Admin/Users/Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreateUser() {
+            var roles = await _roleRepository.GetAllAsync();
+            ViewBag.Role = new SelectList(roles.Data, "Id", "Name");
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(CreateUserDto userDto) {
+            var result = await _userService.CreateUserAdminService.CreateUserAdminAsync(userDto);
             if (result.IsSuccess) {
                 TempData["success"] = result.Message;
                 return Redirect("/Admin/Users/Index");

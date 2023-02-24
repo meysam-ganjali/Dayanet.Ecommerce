@@ -49,7 +49,7 @@
                                     <i class="bx bx-show text-primary"> </i>&nbsp;نمایش در خانه
                                 </h6>
                                 <span class="text-secondary">
-                                    @(Model.ShowOnHomepage == true ? "بلی" : "خیر")
+                                    @(Model.ShowOnHomepage == true ? "بلی" : "خیر") <button onclick="AllowShowHomePage('@Model.Id')" class="btn btn-success"><i class="bx bx-check"></i></button>
                                 </span>
                             </li>
                             <li class=" list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -57,7 +57,7 @@
                                     <i class="bx bxs-happy-beaming text-warning"> </i>&nbsp;محصول ویژه
                                 </h6>
                                 <span class="text-secondary">
-                                    @(Model.IsSotialProduct == true ? "بلی" : "خیر")
+                                    @(Model.IsSotialProduct == true ? "بلی" : "خیر") <button onclick="AllowIsSotial('@Model.Id')" class="btn btn-success"><i class="bx bx-check"></i></button>
                                 </span>
                             </li>
                             <li class=" list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -65,7 +65,7 @@
                                     <i class="bx bx-show-alt text-info"> </i>&nbsp;نحوه نمایش در فروشگاه
                                 </h6>
                                 <span class="text-secondary">
-                                    @(Model.IsShow == true ? "نمایش" : "مخفی")
+                                    @(Model.IsShow == true ? "نمایش" : "مخفی") <button onclick="AllowIsShow('@Model.Id')" class="btn btn-success"><i class="bx bx-check"></i></button>
                                 </span>
                             </li>
                             <li class=" list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -73,7 +73,7 @@
                                     <i class="bx bx-comment text-danger"> </i>&nbsp;اجازه نظرات
                                 </h6>
                                 <span class="text-secondary">
-                                    @(Model.AllowCustomerComment == true ? "اجازه دارد" : "اجازه ندادر")
+                                    @(Model.AllowCustomerComment == true ? "اجازه دارد" : "اجازه ندادر") <button onclick="AllowComment('@Model.Id')" class="btn btn-success"><i class="bx bx-check"></i></button>
                                 </span>
                             </li>
                             <li class=" list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -328,7 +328,6 @@
                 }
             });
         }
-
         function UpdateAttribute(id, Pid, attrName, attrVal, attrColor) {
             $('#prouctAttr_Id_InDetaile').val(id);
             $('#PID_AttrInDetaile').val(Pid);
@@ -336,6 +335,203 @@
             $('#attr_Val_forEdit').val(attrVal);
             $('#attr_Color_forEdit').val(attrColor);
             $('#UpdateProductAttribute').modal('show');
+        }
+
+        function AllowComment(Id) {
+            swal.fire({
+                title: 'غیرفعال / فعال کردن نظرات',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/AllowCommentCheck/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+        function AllowIsShow(Id) {
+            swal.fire({
+                title: 'غیرفعال / فعال کردن نوع نمایش',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/AllowIsShowCheck/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+        function AllowShowHomePage(Id) {
+            swal.fire({
+                title: 'غیرفعال / فعال کردن نمایش در خانه',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/AllowSHowHomePagetCheck/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
+        }
+        function AllowIsSotial(Id) {
+            swal.fire({
+                title: 'غیرفعال / فعال کردن محصول ویژه',
+                text: "کاربر گرامی  مطمئن هستید؟",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#7cacbe',
+                confirmButtonText: 'بله ',
+                cancelButtonText: 'خیر'
+            }).then((result) => {
+                if (result.value) {
+                    var postData = {
+                        'id': Id
+                    };
+                    $.ajax({
+                        contentType: 'application/x-www-form-urlencoded',
+                        dataType: 'json',
+                        type: "POST",
+                        url: "/Admin/Products/AllowIsSotialCheck/",
+                        data: postData,
+                        success: function (data) {
+                            if (data.isSuccess == true) {
+                                swal.fire(
+                                    'موفق!',
+                                    data.message,
+                                    'success'
+                                ).then(function (isConfirm) {
+                                    location.reload();
+                                });
+                            } else {
+
+                                swal.fire(
+                                    'هشدار!',
+                                    data.message,
+                                    'warning'
+                                );
+
+                            }
+                        },
+                        error: function (request, status, error) {
+                            alert(request.responseText);
+                        }
+
+                    });
+
+                }
+            });
         }
     </script>
 }

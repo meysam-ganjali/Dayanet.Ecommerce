@@ -12,4 +12,5 @@ public interface IUserFasade
     IDeleteUserService DeleteUserService { get; }
     IUserAddressService UserAddressService { get; }
     IUpdateUserService UpdateUserService { get; }
+    ICreateUserAdminService CreateUserAdminService { get; }
 }

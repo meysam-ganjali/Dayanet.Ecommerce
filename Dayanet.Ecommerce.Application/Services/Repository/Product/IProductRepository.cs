@@ -14,4 +14,10 @@ public interface IProductRepository
     Task<ResultDto> RemoveFromGallery(int gallaryId);
     Task<ResultDto> RemoveFromProductAttribute(int productAttrId);
     Task<ResultDto> UpdateProductAttribute(int productAttrId,string attrValue, string? colorHex);
+
+    Task<ResultDto> ActivDeActivComment(int pId);
+    Task<ResultDto> ActivDeActivIsShow(int pId);
+    Task<ResultDto> ActivDeActivShowInHomePage(int pId);
+    Task<ResultDto> ActivDeActivIsSotial(int pId);
+
 }
